@@ -6,7 +6,7 @@ int main(void)
   const int screenHeight = 450;
   InitWindow(screenWidth, screenHeight, "generic sand game.c");
   SetTargetFPS(60);
-  int color[screenWidth * screenHeight / 100];
+  static int color[screenWidth * screenHeight / 100];
   int j = 0;
   while (j < (screenWidth * screenHeight / 100))
   {
@@ -15,6 +15,7 @@ int main(void)
   }
   while (!WindowShouldClose())
   {
+    color[81] = 2; //to increase y axis by 1 add 80, so 81 is second pixel of second line
     BeginDrawing();
     ClearBackground(WHITE);
     int rectx = 0;
@@ -44,7 +45,6 @@ int main(void)
       recty = recty + 10;
       i_y = i_y + 1;
     }
-    color[81] = 2; //to increase y axis by 1 add 80, so 81 is second pixel of second line
     EndDrawing();
   }
   CloseWindow();
