@@ -25,7 +25,6 @@ int L_shape(int color_sand, int x_var) {
   }
   var_stuff_2 = 0;
   var_stuff = 0;
-  x_var = 0;
 
   while (var_stuff_2 !=
          15) { // this sets the vertical length of L block's horizontal part
@@ -41,6 +40,49 @@ int L_shape(int color_sand, int x_var) {
     var_stuff_3 = var_stuff_3 + 1;
   }
 
+  var_stuff = 0;
+  var_stuff_2 = 0;
+  var_stuff_3 = 0;
+  y_var = 0;
+  return 0;
+}
+
+int L_shape_reverse(int color_sand, int x_var) {
+  int y_var = x_var;
+  while (var_stuff_2 !=
+         30) { // this sets the vertical length of L block's non horizontal part
+    while (var_stuff !=
+           15) { // this sets horizontal length of L block's non horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var - 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+  var_stuff_2 = 0;
+  var_stuff = 0;
+
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of L block's horizontal part
+    while (var_stuff !=
+           35) { // this sets the horizontal length of L block's horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var - 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+
+  var_stuff = 0;
+  var_stuff_2 = 0;
+  var_stuff_3 = 0;
+  y_var = 0;
   return 0;
 }
 
@@ -63,7 +105,8 @@ int main(void) {
   // screenWidth / pixel_size = number of pixels required to go down the y axis
   // by 1
 
-  L_shape(1, 30);
+  L_shape(1, 1);
+  L_shape_reverse(2, 250);
 
   while (!WindowShouldClose()) {
     int pixels_test = (screenWidth * screenHeight / pixel_size * pixel_size) -
