@@ -3,19 +3,18 @@
 
 static int color[300 * 400 / 2 * 2];
 
-int x_var = 58;
 int var_stuff = 0;
 int var_stuff_2 = 0;
 int var_stuff_3 = 1;
 int y_var;
 
-int L_shape(void) {
+int L_shape(int color_sand, int x_var) {
   int y_var = x_var;
   while (var_stuff_2 !=
-         15) { // this sets the vertical length of L block's non horizontal part
+         30) { // this sets the vertical length of L block's non horizontal part
     while (var_stuff !=
-           9) { // this sets horizontal length of L block's non horizontal part
-      color[x_var] = 2;
+           15) { // this sets horizontal length of L block's non horizontal part
+      color[x_var] = color_sand;
       x_var = x_var + 1;
       var_stuff = var_stuff + 1;
     }
@@ -29,10 +28,10 @@ int L_shape(void) {
   x_var = 0;
 
   while (var_stuff_2 !=
-         7) { // this sets the vertical length of L block's horizontal part
+         15) { // this sets the vertical length of L block's horizontal part
     while (var_stuff !=
-           20) { // this sets the horizontal length of L block's horizontal part
-      color[x_var] = 2;
+           35) { // this sets the horizontal length of L block's horizontal part
+      color[x_var] = color_sand;
       x_var = x_var + 1;
       var_stuff = var_stuff + 1;
     }
@@ -64,7 +63,7 @@ int main(void) {
   // screenWidth / pixel_size = number of pixels required to go down the y axis
   // by 1
 
-  L_shape();
+  L_shape(1, 30);
 
   while (!WindowShouldClose()) {
     int pixels_test = (screenWidth * screenHeight / pixel_size * pixel_size) -
@@ -75,9 +74,9 @@ int main(void) {
           ((screenWidth / pixel_size) * (screenHeight / pixel_size))) {
         if (color[pixels_test + (screenWidth / pixel_size)] == 0 &&
             color[pixels_test] != 0) { // if the cell below is empty
-          color[pixels_test] = 0;      // removes sand from that cell
           color[pixels_test + (screenWidth / pixel_size)] =
-              pixel_size; // adds sand to cell below
+              color[pixels_test]; // adds sand to cell below
+          color[pixels_test] = 0; // removes sand from that cell
         } else {
           int col = pixels_test % (screenWidth / pixel_size);
           int can_go_left =
@@ -94,11 +93,15 @@ int main(void) {
             random = rand() % 2;
             if (random ==
                 0) { // uses rng to determine which cell should have sand
+
+              color[pixels_test + ((screenWidth / pixel_size) - 1)] =
+                  color[pixels_test];
               color[pixels_test] = 0;
-              color[pixels_test + ((screenWidth / pixel_size) - 1)] = 2;
             } else if (random == 1) {
+
+              color[pixels_test + (screenWidth / pixel_size) + 1] =
+                  color[pixels_test];
               color[pixels_test] = 0;
-              color[pixels_test + (screenWidth / pixel_size) + 1] = 2;
             } else {
               exit(0);
             }
@@ -106,15 +109,19 @@ int main(void) {
                      can_go_left) { // if below cell and right cell does not
                                     // have
                                     // sand. put sand in left
+
+            color[pixels_test + ((screenWidth / pixel_size) - 1)] =
+                color[pixels_test];
             color[pixels_test] = 0;
-            color[pixels_test + ((screenWidth / pixel_size) - 1)] = 2;
 
           } else if (color[pixels_test] != 0 &&
                      can_go_right) { // if below cell and left cell does not
                                      // have sand.
                                      // put sand in right
+
+            color[pixels_test + ((screenWidth / pixel_size) + 1)] =
+                color[pixels_test];
             color[pixels_test] = 0;
-            color[pixels_test + ((screenWidth / pixel_size) + 1)] = 2;
           } else if (color[pixels_test] != 0) {
           }
         }
