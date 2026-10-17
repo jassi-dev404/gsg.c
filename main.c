@@ -11,7 +11,7 @@ int y_var;
 int L_shape(int color_sand, int x_var) {
   int y_var = x_var;
   while (var_stuff_2 !=
-         30) { // this sets the vertical length of L block's non horizontal part
+         30) { // this sets the vertical length of block's non horizontal part
     while (var_stuff !=
            15) { // this sets horizontal length of L block's non horizontal part
       color[x_var] = color_sand;
@@ -27,9 +27,9 @@ int L_shape(int color_sand, int x_var) {
   var_stuff = 0;
 
   while (var_stuff_2 !=
-         15) { // this sets the vertical length of L block's horizontal part
+         15) { // this sets the vertical length of block's horizontal part
     while (var_stuff !=
-           35) { // this sets the horizontal length of L block's horizontal part
+           35) { // this sets the horizontal length of block's horizontal part
       color[x_var] = color_sand;
       x_var = x_var + 1;
       var_stuff = var_stuff + 1;
@@ -50,9 +50,9 @@ int L_shape(int color_sand, int x_var) {
 int L_shape_reverse(int color_sand, int x_var) {
   int y_var = x_var;
   while (var_stuff_2 !=
-         30) { // this sets the vertical length of L block's non horizontal part
+         30) { // this sets the vertical length of block's non horizontal part
     while (var_stuff !=
-           15) { // this sets horizontal length of L block's non horizontal part
+           15) { // this sets horizontal length of block's non horizontal part
       color[x_var] = color_sand;
       x_var = x_var - 1;
       var_stuff = var_stuff + 1;
@@ -66,11 +66,150 @@ int L_shape_reverse(int color_sand, int x_var) {
   var_stuff = 0;
 
   while (var_stuff_2 !=
-         15) { // this sets the vertical length of L block's horizontal part
+         15) { // this sets the vertical length of block's horizontal part
     while (var_stuff !=
-           35) { // this sets the horizontal length of L block's horizontal part
+           35) { // this sets the horizontal length of block's horizontal part
       color[x_var] = color_sand;
       x_var = x_var - 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+
+  var_stuff = 0;
+  var_stuff_2 = 0;
+  var_stuff_3 = 0;
+  y_var = 0;
+  return 0;
+}
+
+int I_shape(int color_sand, int x_var) {
+  int y_var = x_var;
+  while (var_stuff_2 !=
+         60) { // this sets the vertical length of block's non horizontal part
+    while (var_stuff !=
+           15) { // this sets horizontal length of block's non horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var + 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+  var_stuff_2 = 0;
+  var_stuff = 0;
+  var_stuff_3 = 0;
+  y_var = 0;
+  return 0;
+}
+
+int S_shape(int color_sand, int x_var) {
+  int y_var = x_var;
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of block's non horizontal part
+    while (var_stuff !=
+           30) { // this sets horizontal length of block's non horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var + 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+  var_stuff_2 = 0;
+  var_stuff = 0;
+
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of block's horizontal part
+    while (var_stuff !=
+           30) { // this sets the horizontal length of block's horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var - 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+
+  var_stuff = 0;
+  var_stuff_2 = 0;
+  var_stuff_3 = 0;
+  y_var = 0;
+  return 0;
+}
+
+int S_shape_reverse(int color_sand, int x_var) {
+  int y_var = x_var;
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of block's non horizontal part
+    while (var_stuff !=
+           30) { // this sets horizontal length of block's non horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var - 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+  var_stuff_2 = 0;
+  var_stuff = 0;
+
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of block's horizontal part
+    while (var_stuff !=
+           30) { // this sets the horizontal length of block's horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var + 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+
+  var_stuff = 0;
+  var_stuff_2 = 0;
+  var_stuff_3 = 0;
+  y_var = 0;
+  return 0;
+}
+
+int O_shape(int color_sand, int x_var) {
+  int y_var = x_var;
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of block's non horizontal part
+    while (var_stuff !=
+           30) { // this sets horizontal length of block's non horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var + 1;
+      var_stuff = var_stuff + 1;
+    }
+    var_stuff = 0;
+    x_var = y_var + 150 * var_stuff_3;
+    var_stuff_2 = var_stuff_2 + 1;
+    var_stuff_3 = var_stuff_3 + 1;
+  }
+  var_stuff_2 = 0;
+  var_stuff = 0;
+
+  while (var_stuff_2 !=
+         15) { // this sets the vertical length of block's horizontal part
+    while (var_stuff !=
+           30) { // this sets the horizontal length of block's horizontal part
+      color[x_var] = color_sand;
+      x_var = x_var + 1;
       var_stuff = var_stuff + 1;
     }
     var_stuff = 0;
@@ -93,7 +232,7 @@ int main(void) {
   const int actualscreenhieght = 400;
   const int pixel_size = 2;
   InitWindow(actualscreenwidth, actualscreenhieght, "generic sand game.c");
-  SetTargetFPS(45);
+  SetTargetFPS(60);
 
   int j = 0;      // integer used to zero out color
   int random = 0; // integer used to pick which cell to put sand in
@@ -105,8 +244,7 @@ int main(void) {
   // screenWidth / pixel_size = number of pixels required to go down the y axis
   // by 1
 
-  L_shape(1, 1);
-  L_shape_reverse(2, 250);
+  O_shape(1, 58);
 
   while (!WindowShouldClose()) {
     int pixels_test = (screenWidth * screenHeight / pixel_size * pixel_size) -
@@ -172,6 +310,7 @@ int main(void) {
 
       pixels_test = pixels_test - 1;
     }
+    Font monocraft = LoadFontEx("Monocraft.ttf", 96, 0, 0);
     BeginDrawing();
     ClearBackground(WHITE);
     int rectx = 0; // variables initiate for cells
@@ -179,6 +318,18 @@ int main(void) {
     int i_x = 0;
     int i_y = 0;
     int i = 0;
+    DrawTextEx(
+        monocraft, "welcome to gsg.c",
+        (Vector2){(float)screenWidth + 30.0f, (float)screenHeight - 350.0f},
+        (float)screenHeight / 10.0f,
+        1.0f,
+        BLACK);
+    DrawTextEx(
+        monocraft, "(generic sand game).c",
+        (Vector2){(float)screenWidth + 60.0f, (float)screenHeight - 300.0f},
+        (float)screenHeight / 17.0f,
+        1.0f,
+        BLACK);
     while (recty < screenHeight) {
       while (rectx < screenWidth) {
         DrawRectangle(rectx, recty, pixel_size, pixel_size,
