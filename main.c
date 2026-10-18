@@ -219,22 +219,42 @@ int main(void) {
         j = j + 1;
     }
 
-    L_shape(1, 1);
-    O_shape(3, 900);
-    L_shape(1, 75);
-    L_shape(1, 129);
-    L_shape(1, 100);
-    L_shape(1, 50);
-
     Font monocraft = LoadFontEx("Monocraft.ttf", 96, 0, 0);
     int safe_to_move = 1;
     int z_var = 0;
     int q_var = 1;
     int i_var = 0;
-    int w_var = 0;
     int target_var = 0;
+    int checker_down = 1;
+    int checker_helper = 0;
+    int rand_2 = 0;
+    int rand_3 = 0;
+    int true_var = 0;
+    int e_var = 0;
 
     while (!WindowShouldClose()) {
+
+        if (checker_down == 1) {
+            rand_2 = (rand() % 4) * 2 + 1;
+            rand_3 = rand() % 6;
+            while (rand_2 == 0) {
+                rand_2 = rand() % 9;
+            }
+            if (rand_3 == 0) {
+                L_shape(rand_2, screenWidth / pixel_size / pixel_size);
+            } else if (rand_3 == 1) {
+                L_shape_reverse(rand_2, screenWidth / pixel_size / pixel_size);
+            } else if (rand_3 == 2) {
+                I_shape(rand_2, screenWidth / pixel_size / pixel_size);
+            } else if (rand_3 == 3) {
+                S_shape(rand_2, screenWidth / pixel_size / pixel_size);
+            } else if (rand_3 == 4) {
+                S_shape_reverse(rand_2, screenWidth / pixel_size / pixel_size);
+            } else if (rand_3 == 5) {
+                O_shape(rand_2, screenWidth / pixel_size / pixel_size);
+            }
+            checker_down = 0;
+        }
 
         if (IsKeyDown(KEY_LEFT)) {
             safe_to_move = 1;
@@ -405,6 +425,22 @@ int main(void) {
         }
 
         int pixels_test = 0;
+        int still_falling = 0;
+
+        while (pixels_test < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
+            if (color[pixels_test] == 1 || color[pixels_test] == 3 || color[pixels_test] == 5 ||
+                color[pixels_test] == 7) {
+                still_falling = 1;
+                break;
+            }
+            pixels_test = pixels_test + 1;
+        }
+        if (still_falling == 0) {
+            checker_down = 1;
+        }
+        checker_helper = 0;
+
+        pixels_test = 0;
 
         while (z_var != screenHeight / pixel_size) {
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
@@ -417,7 +453,21 @@ int main(void) {
                         break;
                     }
                     q_var = q_var + 1;
+                    true_var = 1;
                 }
+                if (true_var != 1) {
+                    while (e_var != screenWidth / pixel_size) {
+                        if (color[pixels_test + q_var] != color[pixels_test] &&
+                            color[pixels_test + q_var + 151] != color[pixels_test] &&
+                            color[pixels_test + q_var - 149] != color[pixels_test]) {
+                            row_matches = 0;
+                            break;
+                        }
+                        e_var = e_var + 1;
+                    }
+                    q_var = e_var;
+                }
+
                 if (row_matches == 1) {
                     i_var = 0;
                     target_var = color[pixels_test + i_var];
@@ -483,10 +533,10 @@ int main(void) {
                         }
                         color[pixels_test + i_var] = 0;
                         i_var = i_var + 1;
+                        true_var = 0;
                     }
                 }
             }
-
             pixels_test = pixels_test + (screenWidth / pixel_size);
             z_var = z_var + 1;
         }
