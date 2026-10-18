@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "tinyfiledialogs.h"
 #include <stdlib.h>
 
 enum { screenWidth = 600, actualscreenwidth = 1500, screenHeight = 900, actualscreenhieght = 900, pixel_size = 3 };
@@ -231,6 +232,7 @@ int main(void) {
     int rand_2 = 0;
     int rand_3 = 0;
     int true_var = 0;
+    int crash_checker = 0;
     int e_var = 0;
 
     while (!WindowShouldClose()) {
@@ -456,6 +458,19 @@ int main(void) {
         } else {
             seen_stamp = seen_stamp + 1;
         }
+
+        while (crash_checker != screenWidth / pixel_size * 5) {
+            if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
+                color[pixels_test] == 8) {
+                tinyfd_messageBox("Error", "You Lost Sucker", "yes i lost :(", "error", 1);
+                exit(0);
+            }
+            crash_checker = crash_checker + 1;
+            pixels_test = pixels_test + 1;
+        }
+
+        crash_checker = 0;
+        pixels_test = 0;
 
         while (z_var != screenHeight / pixel_size) {
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||

@@ -1,3 +1,5 @@
 game
 raylib.h
 .clang-format
+tinyfiledialogs.c
+tinyfiledialogs.h
