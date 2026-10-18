@@ -2,6 +2,10 @@
 #include <stdlib.h>
 
 static int color[300 * 400 / 2 * 2];
+static int seen_line[300 * 400 / 2 * 2];
+static int line_stack[300 * 400 / 2 * 2];
+static int line_cells[300 * 400 / 2 * 2];
+static int seen_stamp = 0;
 
 int var_stuff = 0;
 int var_stuff_2 = 0;
@@ -442,6 +446,18 @@ int main(void) {
 
         pixels_test = 0;
 
+        if (seen_stamp == 2147483647) { 
+            q_var = 0;
+            while (q_var < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
+                seen_line[q_var] = 0;
+                q_var = q_var + 1;
+            }
+            q_var = 0;
+            seen_stamp = 1;
+        } else {
+            seen_stamp = seen_stamp + 1;
+        }
+
         while (z_var != screenHeight / pixel_size) {
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                 color[pixels_test] == 8) {
@@ -455,17 +471,68 @@ int main(void) {
                     q_var = q_var + 1;
                     true_var = 1;
                 }
-                if (true_var != 1) {
-                    while (e_var != screenWidth / pixel_size) {
-                        if (color[pixels_test + q_var] != color[pixels_test] &&
-                            color[pixels_test + q_var + 151] != color[pixels_test] &&
-                            color[pixels_test + q_var - 149] != color[pixels_test]) {
-                            row_matches = 0;
-                            break;
+                if (seen_line[pixels_test] != seen_stamp) {
+                    int stride = screenWidth / pixel_size;
+                    int board_rows = screenHeight / pixel_size;
+                    int board_n = (screenWidth * screenHeight) / (pixel_size * pixel_size);
+                    int save_a = var_stuff;
+                    int save_b = var_stuff_2;
+                    int save_c = var_stuff_3;
+                    int dx_var;
+                    int dy_var;
+                    int col_var;
+                    int row_var;
+                    target_var = color[pixels_test];
+                    seen_line[pixels_test] = seen_stamp;
+                    line_stack[0] = pixels_test;
+                    line_cells[0] = pixels_test;
+                    var_stuff = 1;
+                    var_stuff_3 = 1;
+                    true_var = 0;
+                    while (var_stuff != 0) {
+                        var_stuff = var_stuff - 1;
+                        e_var = line_stack[var_stuff];
+                        if ((e_var % stride) == (stride - 1)) {
+                            true_var = 1;
                         }
-                        e_var = e_var + 1;
+                        dy_var = -1;
+                        while (dy_var <= 1) {
+                            dx_var = -1;
+                            while (dx_var <= 1) {
+                                if (dx_var != 0 || dy_var != 0) {
+                                    col_var = (e_var % stride) + dx_var;
+                                    row_var = (e_var / stride) + dy_var;
+                                    if (col_var >= 0 && col_var < stride && row_var >= 0 && row_var < board_rows) {
+                                        q_var = row_var * stride + col_var;
+                                        if (q_var >= 0 && q_var < board_n && seen_line[q_var] != seen_stamp &&
+                                            color[q_var] == target_var) {
+                                            seen_line[q_var] = seen_stamp;
+                                            line_stack[var_stuff] = q_var;
+                                            var_stuff = var_stuff + 1;
+                                            line_cells[var_stuff_3] = q_var;
+                                            var_stuff_3 = var_stuff_3 + 1;
+                                        }
+                                    }
+                                }
+                                dx_var = dx_var + 1;
+                            }
+                            dy_var = dy_var + 1;
+                        }
                     }
-                    q_var = e_var;
+                    if (true_var == 1) {
+                        var_stuff = 0;
+                        while (var_stuff != var_stuff_3) {
+                            color[line_cells[var_stuff]] = 0;
+                            var_stuff = var_stuff + 1;
+                        }
+                        row_matches = 0;
+                    }
+                    var_stuff = save_a;
+                    var_stuff_2 = save_b;
+                    var_stuff_3 = save_c;
+                    e_var = 0;
+                    q_var = 0;
+                    true_var = 0;
                 }
 
                 if (row_matches == 1) {
