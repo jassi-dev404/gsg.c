@@ -2,7 +2,7 @@
 #include "tinyfiledialogs.h"
 #include <stdlib.h>
 
-enum { screenWidth = 600, actualscreenwidth = 1500, screenHeight = 900, actualscreenhieght = 900, pixel_size = 3 };
+enum { screenWidth = 700, actualscreenwidth = 1590, screenHeight = 900, actualscreenhieght = 900, pixel_size = 4 };
 
 static int color[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int seen_line[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
@@ -234,12 +234,17 @@ int main(void) {
     int true_var = 0;
     int crash_checker = 0;
     int e_var = 0;
+    int multiplier = 1;
+    int score = 0;
+    int score_thingy = 0;
+    int score_thingy_updater = 0;
+    float multiplier_timer = 0.0f; // Declared outside the main loop
 
     while (!WindowShouldClose()) {
 
         if (checker_down == 1) {
-            rand_2 = (rand() % 4) * 2 + 1;
-            rand_3 = rand() % 6;
+            rand_2 = GetRandomValue(0, 3) * 2 + 1;
+            rand_3 = GetRandomValue(0, 5);
             while (rand_2 == 0) {
                 rand_2 = rand() % 9;
             }
@@ -459,7 +464,7 @@ int main(void) {
             seen_stamp = seen_stamp + 1;
         }
 
-        while (crash_checker != screenWidth / pixel_size * 5) {
+        while (crash_checker != screenWidth / pixel_size) {
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                 color[pixels_test] == 8) {
                 tinyfd_messageBox("Error", "You Lost Sucker", "yes i lost :(", "error", 1);
@@ -538,8 +543,10 @@ int main(void) {
                         while (var_stuff != var_stuff_3) {
                             color[line_cells[var_stuff]] = 0;
                             var_stuff = var_stuff + 1;
+                            score = score + 1;
                         }
                         row_matches = 0;
+                        multiplier = multiplier + 1;
                     }
                     var_stuff = save_a;
                     var_stuff_2 = save_b;
@@ -579,7 +586,6 @@ int main(void) {
                                     (i_var + 1 + q_var + pixels_test) % (screenWidth / pixel_size) != 0 &&
                                     target_var == color[i_var + 1 + q_var + pixels_test]) {
                                     color[i_var + 1 + q_var + pixels_test] = 0;
-
                                 } else {
                                     break;
                                 }
@@ -677,6 +683,15 @@ int main(void) {
             pixels_test = pixels_test - 1;
         }
         pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
+
+        multiplier_timer = multiplier_timer + GetFrameTime();
+        if (multiplier_timer >= 5.0f) {
+            if (multiplier > 1) {
+                multiplier = multiplier - 1;
+            }
+            multiplier_timer = 0.0f;
+        }
+
         BeginDrawing();
         ClearBackground(WHITE);
         int rectx = 0; // variables initiate for cells
@@ -684,11 +699,42 @@ int main(void) {
         int i_x = 0;
         int i_y = 0;
         int i = 0;
+        int rand_4 = 0;
+        Color color_picked = BLACK;
+        score_thingy = multiplier * score;
+
         DrawTextEx(monocraft, "welcome to gsg.c", (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 550.0f},
                    (float)screenHeight / 10.0f, 1.0f, BLACK);
         DrawTextEx(monocraft, "(generic sand game).c",
                    (Vector2){(float)screenWidth + 140.0f, (float)screenHeight - 450.0f}, (float)screenHeight / 17.0f,
                    1.0f, BLACK);
+
+        if (score_thingy_updater < score_thingy) {
+            rand_4 = GetRandomValue(0, 7);
+            if (rand_4 == 0) {
+                color_picked = RED;
+            } else if (rand_4 == 1) {
+                color_picked = BLUE;
+            } else if (rand_4 == 2) {
+                color_picked = GREEN;
+            } else if (rand_4 == 3) {
+                color_picked = YELLOW;
+            } else if (rand_4 == 4) {
+                color_picked = PURPLE;
+            } else if (rand_4 == 5) {
+                color_picked = VIOLET;
+            } else if (rand_4 == 6) {
+                color_picked = PINK;
+            } else if (rand_4 == 7) {
+                color_picked = MAGENTA;
+            }
+            score_thingy_updater = score_thingy_updater + 15;
+        }
+
+        DrawTextEx(monocraft, TextFormat("score: %d, multiplier: %dx", score_thingy_updater, multiplier),
+                   (Vector2){(float)screenWidth + 150.0f, (float)screenHeight - 860.0f}, (float)screenHeight / 17.0f,
+                   1.0f, color_picked);
+
         while (recty < screenHeight) {
             while (rectx < screenWidth) {
                 DrawRectangle(rectx, recty, pixel_size, pixel_size,
