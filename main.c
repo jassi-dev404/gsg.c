@@ -1,10 +1,12 @@
 #include "raylib.h"
 #include <stdlib.h>
 
-static int color[300 * 400 / 2 * 2];
-static int seen_line[300 * 400 / 2 * 2];
-static int line_stack[300 * 400 / 2 * 2];
-static int line_cells[300 * 400 / 2 * 2];
+enum { screenWidth = 600, actualscreenwidth = 1500, screenHeight = 900, actualscreenhieght = 900, pixel_size = 3 };
+
+static int color[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
+static int seen_line[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
+static int line_stack[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
+static int line_cells[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int seen_stamp = 0;
 
 int var_stuff = 0;
@@ -21,7 +23,7 @@ int L_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -35,7 +37,7 @@ int L_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -56,7 +58,7 @@ int L_shape_reverse(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -70,7 +72,7 @@ int L_shape_reverse(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -91,7 +93,7 @@ int I_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -111,7 +113,7 @@ int S_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -125,7 +127,7 @@ int S_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -146,7 +148,7 @@ int S_shape_reverse(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -160,7 +162,7 @@ int S_shape_reverse(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -181,7 +183,7 @@ int O_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -195,7 +197,7 @@ int O_shape(int color_sand, int x_var) {
             var_stuff = var_stuff + 1;
         }
         var_stuff = 0;
-        x_var = y_var + 150 * var_stuff_3;
+        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
         var_stuff_2 = var_stuff_2 + 1;
         var_stuff_3 = var_stuff_3 + 1;
     }
@@ -208,13 +210,8 @@ int O_shape(int color_sand, int x_var) {
 }
 
 int main(void) {
-    const int screenWidth = 300;
-    const int actualscreenwidth = 700;
-    const int screenHeight = 400;
-    const int actualscreenhieght = 400;
-    const int pixel_size = 2;
     InitWindow(actualscreenwidth, actualscreenhieght, "generic sand game.c");
-    SetTargetFPS(60);
+    SetTargetFPS(100);
 
     int j = 0;
     int random = 0;
@@ -265,8 +262,8 @@ int main(void) {
             j = 0;
             while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                 if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
-                    if ((j % 150) == 0 || color[j - 1] == 2 || color[j - 1] == 4 || color[j - 1] == 6 ||
-                        color[j - 1] == 8) {
+                    if ((j % (screenWidth / pixel_size)) == 0 || color[j - 1] == 2 || color[j - 1] == 4 ||
+                        color[j - 1] == 6 || color[j - 1] == 8) {
                         safe_to_move = 0;
                         break;
                     }
@@ -299,8 +296,8 @@ int main(void) {
             j = 0;
             while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                 if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
-                    if ((j % 150) == 149 || color[j + 1] == 2 || color[j + 1] == 4 || color[j + 1] == 6 ||
-                        color[j + 1] == 8) {
+                    if ((j % (screenWidth / pixel_size)) == (screenWidth / pixel_size - 1) || color[j + 1] == 2 ||
+                        color[j + 1] == 4 || color[j + 1] == 6 || color[j + 1] == 8) {
                         safe_to_move = 0;
                         break;
                     }
@@ -333,8 +330,9 @@ int main(void) {
             j = 0;
             while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                 if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
-                    if (j + 150 >= (screenWidth * screenHeight) / (pixel_size * pixel_size) || color[j + 150] == 2 ||
-                        color[j + 150] == 4 || color[j + 150] == 6 || color[j + 150] == 8) {
+                    if (j + (screenWidth / pixel_size) >= (screenWidth * screenHeight) / (pixel_size * pixel_size) ||
+                        color[j + (screenWidth / pixel_size)] == 2 || color[j + (screenWidth / pixel_size)] == 4 ||
+                        color[j + (screenWidth / pixel_size)] == 6 || color[j + (screenWidth / pixel_size)] == 8) {
                         safe_to_move = 0;
                         break;
                     }
@@ -345,16 +343,16 @@ int main(void) {
                 int pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
                 while (pixels_test >= 0) {
                     if (color[pixels_test] == 1) {
-                        color[pixels_test + 150] = 1;
+                        color[pixels_test + (screenWidth / pixel_size)] = 1;
                         color[pixels_test] = 0;
                     } else if (color[pixels_test] == 3) {
-                        color[pixels_test + 150] = 3;
+                        color[pixels_test + (screenWidth / pixel_size)] = 3;
                         color[pixels_test] = 0;
                     } else if (color[pixels_test] == 5) {
-                        color[pixels_test + 150] = 5;
+                        color[pixels_test + (screenWidth / pixel_size)] = 5;
                         color[pixels_test] = 0;
                     } else if (color[pixels_test] == 7) {
-                        color[pixels_test + 150] = 7;
+                        color[pixels_test + (screenWidth / pixel_size)] = 7;
                         color[pixels_test] = 0;
                     }
                     pixels_test = pixels_test - 1;
@@ -383,8 +381,9 @@ int main(void) {
         j = 0;
         while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
             if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
-                if (j + 150 >= (screenWidth * screenHeight) / (pixel_size * pixel_size) || color[j + 150] == 2 ||
-                    color[j + 150] == 4 || color[j + 150] == 6 || color[j + 150] == 8) {
+                if (j + (screenWidth / pixel_size) >= (screenWidth * screenHeight) / (pixel_size * pixel_size) ||
+                    color[j + (screenWidth / pixel_size)] == 2 || color[j + (screenWidth / pixel_size)] == 4 ||
+                    color[j + (screenWidth / pixel_size)] == 6 || color[j + (screenWidth / pixel_size)] == 8) {
                     safe_to_move = 0;
                     break;
                 }
@@ -395,16 +394,16 @@ int main(void) {
             int pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
             while (pixels_test >= 0) {
                 if (color[pixels_test] == 1) {
-                    color[pixels_test + 150] = 1;
+                    color[pixels_test + (screenWidth / pixel_size)] = 1;
                     color[pixels_test] = 0;
                 } else if (color[pixels_test] == 3) {
-                    color[pixels_test + 150] = 3;
+                    color[pixels_test + (screenWidth / pixel_size)] = 3;
                     color[pixels_test] = 0;
                 } else if (color[pixels_test] == 5) {
-                    color[pixels_test + 150] = 5;
+                    color[pixels_test + (screenWidth / pixel_size)] = 5;
                     color[pixels_test] = 0;
                 } else if (color[pixels_test] == 7) {
-                    color[pixels_test + 150] = 7;
+                    color[pixels_test + (screenWidth / pixel_size)] = 7;
                     color[pixels_test] = 0;
                 }
                 pixels_test = pixels_test - 1;
@@ -446,7 +445,7 @@ int main(void) {
 
         pixels_test = 0;
 
-        if (seen_stamp == 2147483647) { 
+        if (seen_stamp == 2147483647) {
             q_var = 0;
             while (q_var < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                 seen_line[q_var] = 0;
@@ -539,11 +538,13 @@ int main(void) {
                     i_var = 0;
                     target_var = color[pixels_test + i_var];
                     while (i_var != screenWidth / pixel_size) {
-                        if ((pixels_test + i_var) % 150 != 0 && color[pixels_test + i_var - 1] == target_var) {
+                        if ((pixels_test + i_var) % (screenWidth / pixel_size) != 0 &&
+                            color[pixels_test + i_var - 1] == target_var) {
                             while (true) {
                                 q_var = q_var + 1;
                                 if (i_var - 1 - q_var + pixels_test >= 0 &&
-                                    (i_var - 1 - q_var + pixels_test) % 150 != 149 &&
+                                    (i_var - 1 - q_var + pixels_test) % (screenWidth / pixel_size) !=
+                                        (screenWidth / pixel_size - 1) &&
                                     target_var == color[i_var - 1 - q_var + pixels_test]) {
                                     color[i_var - 1 - q_var + pixels_test] = color[i_var - 1 - pixels_test];
                                     color[i_var - 1 - q_var + pixels_test] = 0;
@@ -554,12 +555,13 @@ int main(void) {
                             color[i_var - 1 + pixels_test] = 0;
                             q_var = 0;
                         }
-                        if ((pixels_test + i_var) % 150 != 149 && color[i_var + 1 + pixels_test] == target_var) {
+                        if ((pixels_test + i_var) % (screenWidth / pixel_size) != (screenWidth / pixel_size - 1) &&
+                            color[i_var + 1 + pixels_test] == target_var) {
                             while (true) {
                                 q_var = q_var + 1;
                                 if (i_var + 1 + q_var + pixels_test <
                                         screenWidth * screenHeight / (pixel_size * pixel_size) &&
-                                    (i_var + 1 + q_var + pixels_test) % 150 != 0 &&
+                                    (i_var + 1 + q_var + pixels_test) % (screenWidth / pixel_size) != 0 &&
                                     target_var == color[i_var + 1 + q_var + pixels_test]) {
                                     color[i_var + 1 + q_var + pixels_test] = 0;
 
@@ -570,32 +572,41 @@ int main(void) {
                             color[i_var + 1 + pixels_test] = 0;
                             q_var = 0;
                         }
-                        if ((pixels_test + i_var + 150) < screenWidth * screenHeight / (pixel_size * pixel_size) &&
-                            color[i_var + 150 + pixels_test] == target_var) {
+                        if ((pixels_test + i_var + (screenWidth / pixel_size)) <
+                                screenWidth * screenHeight / (pixel_size * pixel_size) &&
+                            color[i_var + (screenWidth / pixel_size) + pixels_test] == target_var) {
                             while (true) {
                                 q_var = q_var + 1;
-                                if (i_var + 150 + (q_var * 150) + pixels_test <
+                                if (i_var + (screenWidth / pixel_size) + (q_var * (screenWidth / pixel_size)) +
+                                            pixels_test <
                                         screenWidth * screenHeight / (pixel_size * pixel_size) &&
-                                    target_var == color[i_var + 150 + (q_var * 150) + pixels_test]) {
-                                    color[i_var + 150 + (q_var * 150) + pixels_test] = 0;
+                                    target_var == color[i_var + (screenWidth / pixel_size) +
+                                                        (q_var * (screenWidth / pixel_size)) + pixels_test]) {
+                                    color[i_var + (screenWidth / pixel_size) + (q_var * (screenWidth / pixel_size)) +
+                                          pixels_test] = 0;
                                 } else {
                                     break;
                                 }
                             }
-                            color[i_var + 150 + pixels_test] = 0;
+                            color[i_var + (screenWidth / pixel_size) + pixels_test] = 0;
                             q_var = 0;
                         }
-                        if ((pixels_test + i_var - 150) >= 0 && color[pixels_test + i_var - 150] == target_var) {
+                        if ((pixels_test + i_var - (screenWidth / pixel_size)) >= 0 &&
+                            color[pixels_test + i_var - (screenWidth / pixel_size)] == target_var) {
                             while (true) {
                                 q_var = q_var + 1;
-                                if (i_var - 150 - (q_var * 150) + pixels_test >= 0 &&
-                                    target_var == color[i_var - 150 - (q_var * 150) + pixels_test]) {
-                                    color[i_var - 150 - (q_var * 150) + pixels_test] = 0;
+                                if (i_var - (screenWidth / pixel_size) - (q_var * (screenWidth / pixel_size)) +
+                                            pixels_test >=
+                                        0 &&
+                                    target_var == color[i_var - (screenWidth / pixel_size) -
+                                                        (q_var * (screenWidth / pixel_size)) + pixels_test]) {
+                                    color[i_var - (screenWidth / pixel_size) - (q_var * (screenWidth / pixel_size)) +
+                                          pixels_test] = 0;
                                 } else {
                                     break;
                                 }
                             }
-                            color[i_var - 150 + pixels_test] = 0;
+                            color[i_var - (screenWidth / pixel_size) + pixels_test] = 0;
                             q_var = 0;
                         }
                         color[pixels_test + i_var] = 0;
@@ -617,31 +628,32 @@ int main(void) {
         while (pixels_test >= 0) { // while it is more than 0 we will keep checking
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                 color[pixels_test] == 8) {
-                int can_go_left =
-                    ((pixels_test % (screenWidth / 2)) > 0) && (color[pixels_test + (screenWidth / 2 - 1)] == 0);
-                int can_go_right = ((pixels_test % (screenWidth / 2)) < (screenWidth / 2 - 1)) &&
-                                   (color[pixels_test + (screenWidth / 2 + 1)] == 0);
+                int can_go_left = ((pixels_test % (screenWidth / pixel_size)) > 0) &&
+                                  (color[pixels_test + (screenWidth / pixel_size - 1)] == 0);
+                int can_go_right = ((pixels_test % (screenWidth / pixel_size)) < (screenWidth / pixel_size - 1)) &&
+                                   (color[pixels_test + (screenWidth / pixel_size + 1)] == 0);
 
-                if (pixels_test + 150 < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
-                    if (color[pixels_test + 150] == 0) {               // if the cell below is empty
-                        color[pixels_test + 150] = color[pixels_test]; // adds sand to cell below
-                        color[pixels_test] = 0;                        // removes sand from that cell
+                if (pixels_test + (screenWidth / pixel_size) <
+                    (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
+                    if (color[pixels_test + (screenWidth / pixel_size)] == 0) { // if the cell below is empty
+                        color[pixels_test + (screenWidth / pixel_size)] = color[pixels_test]; // adds sand to cell below
+                        color[pixels_test] = 0; // removes sand from that cell
                     } else {
                         if (can_go_left &&
                             can_go_right) { // if below cell has sand but sand is not in cells left and right of it
                             random = rand() % 2;
                             if (random == 0) { // uses rng to determine which cell should have sand
-                                color[pixels_test + screenWidth / 2 - 1] = color[pixels_test];
+                                color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
                                 color[pixels_test] = 0;
                             } else if (random == 1) {
-                                color[pixels_test + screenWidth / 2 + 1] = color[pixels_test];
+                                color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                                 color[pixels_test] = 0;
                             }
                         } else if (can_go_left) { // if below cell and right cell does not have sand. put sand in left
-                            color[pixels_test + screenWidth / 2 - 1] = color[pixels_test];
+                            color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
                             color[pixels_test] = 0;
                         } else if (can_go_right) { // if below cell and left cell does have sand. put sand in right
-                            color[pixels_test + screenWidth / 2 + 1] = color[pixels_test];
+                            color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                             color[pixels_test] = 0;
                         }
                     }
@@ -657,10 +669,10 @@ int main(void) {
         int i_x = 0;
         int i_y = 0;
         int i = 0;
-        DrawTextEx(monocraft, "welcome to gsg.c", (Vector2){(float)screenWidth + 30.0f, (float)screenHeight - 350.0f},
+        DrawTextEx(monocraft, "welcome to gsg.c", (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 550.0f},
                    (float)screenHeight / 10.0f, 1.0f, BLACK);
         DrawTextEx(monocraft, "(generic sand game).c",
-                   (Vector2){(float)screenWidth + 60.0f, (float)screenHeight - 300.0f}, (float)screenHeight / 17.0f,
+                   (Vector2){(float)screenWidth + 140.0f, (float)screenHeight - 450.0f}, (float)screenHeight / 17.0f,
                    1.0f, BLACK);
         while (recty < screenHeight) {
             while (rectx < screenWidth) {
