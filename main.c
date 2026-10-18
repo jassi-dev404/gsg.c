@@ -219,10 +219,20 @@ int main(void) {
         j = j + 1;
     }
 
-    S_shape(1, 78);
+    L_shape(1, 1);
+    O_shape(3, 900);
+    L_shape(1, 75);
+    L_shape(1, 129);
+    L_shape(1, 100);
+    L_shape(1, 50);
 
     Font monocraft = LoadFontEx("Monocraft.ttf", 96, 0, 0);
     int safe_to_move = 1;
+    int z_var = 0;
+    int q_var = 1;
+    int i_var = 0;
+    int w_var = 0;
+    int target_var = 0;
 
     while (!WindowShouldClose()) {
 
@@ -394,9 +404,99 @@ int main(void) {
             }
         }
 
-        int pixels_test =
+        int pixels_test = 0;
+
+        while (z_var != screenHeight / pixel_size) {
+            if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
+                color[pixels_test] == 8) {
+                q_var = 1;
+                int row_matches = 1;
+                while (q_var != screenWidth / pixel_size) {
+                    if (color[pixels_test + q_var] != color[pixels_test]) {
+                        row_matches = 0;
+                        break;
+                    }
+                    q_var = q_var + 1;
+                }
+                if (row_matches == 1) {
+                    i_var = 0;
+                    target_var = color[pixels_test + i_var];
+                    while (i_var != screenWidth / pixel_size) {
+                        if ((pixels_test + i_var) % 150 != 0 && color[pixels_test + i_var - 1] == target_var) {
+                            while (true) {
+                                q_var = q_var + 1;
+                                if (i_var - 1 - q_var + pixels_test >= 0 &&
+                                    (i_var - 1 - q_var + pixels_test) % 150 != 149 &&
+                                    target_var == color[i_var - 1 - q_var + pixels_test]) {
+                                    color[i_var - 1 - q_var + pixels_test] = color[i_var - 1 - pixels_test];
+                                    color[i_var - 1 - q_var + pixels_test] = 0;
+                                } else {
+                                    break;
+                                }
+                            }
+                            color[i_var - 1 + pixels_test] = 0;
+                            q_var = 0;
+                        }
+                        if ((pixels_test + i_var) % 150 != 149 && color[i_var + 1 + pixels_test] == target_var) {
+                            while (true) {
+                                q_var = q_var + 1;
+                                if (i_var + 1 + q_var + pixels_test <
+                                        screenWidth * screenHeight / (pixel_size * pixel_size) &&
+                                    (i_var + 1 + q_var + pixels_test) % 150 != 0 &&
+                                    target_var == color[i_var + 1 + q_var + pixels_test]) {
+                                    color[i_var + 1 + q_var + pixels_test] = 0;
+
+                                } else {
+                                    break;
+                                }
+                            }
+                            color[i_var + 1 + pixels_test] = 0;
+                            q_var = 0;
+                        }
+                        if ((pixels_test + i_var + 150) < screenWidth * screenHeight / (pixel_size * pixel_size) &&
+                            color[i_var + 150 + pixels_test] == target_var) {
+                            while (true) {
+                                q_var = q_var + 1;
+                                if (i_var + 150 + (q_var * 150) + pixels_test <
+                                        screenWidth * screenHeight / (pixel_size * pixel_size) &&
+                                    target_var == color[i_var + 150 + (q_var * 150) + pixels_test]) {
+                                    color[i_var + 150 + (q_var * 150) + pixels_test] = 0;
+                                } else {
+                                    break;
+                                }
+                            }
+                            color[i_var + 150 + pixels_test] = 0;
+                            q_var = 0;
+                        }
+                        if ((pixels_test + i_var - 150) >= 0 && color[pixels_test + i_var - 150] == target_var) {
+                            while (true) {
+                                q_var = q_var + 1;
+                                if (i_var - 150 - (q_var * 150) + pixels_test >= 0 &&
+                                    target_var == color[i_var - 150 - (q_var * 150) + pixels_test]) {
+                                    color[i_var - 150 - (q_var * 150) + pixels_test] = 0;
+                                } else {
+                                    break;
+                                }
+                            }
+                            color[i_var - 150 + pixels_test] = 0;
+                            q_var = 0;
+                        }
+                        color[pixels_test + i_var] = 0;
+                        i_var = i_var + 1;
+                    }
+                }
+            }
+
+            pixels_test = pixels_test + (screenWidth / pixel_size);
+            z_var = z_var + 1;
+        }
+        z_var = 0;
+        q_var = 0;
+
+        pixels_test =
             (screenWidth * screenHeight) / (pixel_size * pixel_size) -
             1; // just a variable used to calculate which pixels have sand in em so that we can give em *gravity*
+
         while (pixels_test >= 0) { // while it is more than 0 we will keep checking
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                 color[pixels_test] == 8) {
@@ -432,7 +532,7 @@ int main(void) {
             }
             pixels_test = pixels_test - 1;
         }
-
+        pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
         BeginDrawing();
         ClearBackground(WHITE);
         int rectx = 0; // variables initiate for cells
