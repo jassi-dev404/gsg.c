@@ -3,3 +3,5 @@ raylib.h
 .clang-format
 tinyfiledialogs.c
 tinyfiledialogs.h
+/emsdk
+libraylib.web.a

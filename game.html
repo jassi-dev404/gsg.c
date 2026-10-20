@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    canvas {
+      border: 0;
+      outline: none;
+      display: block;
+      image-rendering: pixelated;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
+
+  <script>
+    var canvasElement = document.getElementById("canvas");
+    
+    canvasElement.addEventListener("webglcontextlost", function(e) {
+      alert("WebGL context lost. Please reload the page.");
+      e.preventDefault();
+    }, false);
+
+    var Module = {
+      canvas: canvasElement,
+      print: function(...e) { console.log(...e); },
+      printErr: function(...e) { console.error(...e); }
+    };
+  </script>
+  <script async src="game.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 #include "tinyfiledialogs.h"
 #include <stdlib.h>
 
-enum { screenWidth = 700, actualscreenwidth = 1590, screenHeight = 900, actualscreenhieght = 900, pixel_size = 4 };
+enum { screenWidth = 699, actualscreenwidth = 1590, screenHeight = 900, actualscreenhieght = 900, pixel_size = 3 };
 
 static int color[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int seen_line[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
@@ -212,7 +212,7 @@ int O_shape(int color_sand, int x_var) {
 
 int main(void) {
     InitWindow(actualscreenwidth, actualscreenhieght, "generic sand game.c");
-    SetTargetFPS(100);
+    SetTargetFPS(60);
 
     int j = 0;
     int random = 0;
@@ -221,7 +221,7 @@ int main(void) {
         j = j + 1;
     }
 
-    Font monocraft = LoadFontEx("Monocraft.ttf", 96, 0, 0);
+    Font monocraft = LoadFontEx("assets/Monocraft.ttf", 96, 0, 0);
     int safe_to_move = 1;
     int z_var = 0;
     int q_var = 1;
@@ -241,6 +241,8 @@ int main(void) {
     float multiplier_timer = 0.0f; // Declared outside the main loop
 
     while (!WindowShouldClose()) {
+
+        for (int step = 0; step < 2; step++) {
 
         if (checker_down == 1) {
             rand_2 = GetRandomValue(0, 3) * 2 + 1;
@@ -463,11 +465,18 @@ int main(void) {
         } else {
             seen_stamp = seen_stamp + 1;
         }
-
-        while (crash_checker != screenWidth / pixel_size) {
+while (crash_checker != screenWidth / pixel_size) {
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                 color[pixels_test] == 8) {
+                BeginDrawing();
+                ClearBackground(WHITE);
+                DrawTextEx(monocraft, "you lost lol", (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 550.0f},
+                           (float)screenHeight / 10.0f, 1.0f, BLACK);
+                EndDrawing();
+
+#ifndef __EMSCRIPTEN__
                 tinyfd_messageBox("Error", "You Lost Sucker", "yes i lost :(", "error", 1);
+#endif
                 exit(0);
             }
             crash_checker = crash_checker + 1;
@@ -642,11 +651,11 @@ int main(void) {
         z_var = 0;
         q_var = 0;
 
-        pixels_test =
-            (screenWidth * screenHeight) / (pixel_size * pixel_size) -
-            1; // just a variable used to calculate which pixels have sand in em so that we can give em *gravity*
+        // just a variable used to calculate which pixels have sand in em so that we can give em *gravity*
+        pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
 
-        while (pixels_test >= 0) { // while it is more than 0 we will keep checking
+        // while it is more than 0 we will keep checking
+        while (pixels_test >= 0) {
             if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                 color[pixels_test] == 8) {
                 int can_go_left = ((pixels_test % (screenWidth / pixel_size)) > 0) &&
@@ -656,24 +665,30 @@ int main(void) {
 
                 if (pixels_test + (screenWidth / pixel_size) <
                     (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
-                    if (color[pixels_test + (screenWidth / pixel_size)] == 0) { // if the cell below is empty
-                        color[pixels_test + (screenWidth / pixel_size)] = color[pixels_test]; // adds sand to cell below
-                        color[pixels_test] = 0; // removes sand from that cell
+                    // if the cell below is empty
+                    if (color[pixels_test + (screenWidth / pixel_size)] == 0) {
+                        // adds sand to cell below
+                        color[pixels_test + (screenWidth / pixel_size)] = color[pixels_test];
+                        // removes sand from that cell
+                        color[pixels_test] = 0;
                     } else {
-                        if (can_go_left &&
-                            can_go_right) { // if below cell has sand but sand is not in cells left and right of it
+                        // if below cell has sand but sand is not in cells left and right of it
+                        if (can_go_left && can_go_right) {
+                            // uses rng to determine which cell should have sand
                             random = rand() % 2;
-                            if (random == 0) { // uses rng to determine which cell should have sand
+                            if (random == 0) {
                                 color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
                                 color[pixels_test] = 0;
                             } else if (random == 1) {
                                 color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                                 color[pixels_test] = 0;
                             }
-                        } else if (can_go_left) { // if below cell and right cell does not have sand. put sand in left
+                        // if below cell and right cell does not have sand. put sand in left
+                        } else if (can_go_left) {
                             color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
                             color[pixels_test] = 0;
-                        } else if (can_go_right) { // if below cell and left cell does have sand. put sand in right
+                        // if below cell and left cell does have sand. put sand in right
+                        } else if (can_go_right) {
                             color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                             color[pixels_test] = 0;
                         }
@@ -692,9 +707,11 @@ int main(void) {
             multiplier_timer = 0.0f;
         }
 
+        }
+
         BeginDrawing();
         ClearBackground(WHITE);
-        int rectx = 0; // variables initiate for cells
+        int rectx = 0;
         int recty = 0;
         int i_x = 0;
         int i_y = 0;
@@ -708,6 +725,9 @@ int main(void) {
         DrawTextEx(monocraft, "(generic sand game).c",
                    (Vector2){(float)screenWidth + 140.0f, (float)screenHeight - 450.0f}, (float)screenHeight / 17.0f,
                    1.0f, BLACK);
+        DrawTextEx(monocraft, "in beta right now",
+                   (Vector2){(float)screenWidth + 200.0f, (float)screenHeight - 350.0f}, (float)screenHeight / 17.0f,
+                   1.0f, BLACK);        
 
         if (score_thingy_updater < score_thingy) {
             rand_4 = GetRandomValue(0, 7);
@@ -732,13 +752,14 @@ int main(void) {
         }
 
         DrawTextEx(monocraft, TextFormat("score: %d, multiplier: %dx", score_thingy_updater, multiplier),
-                   (Vector2){(float)screenWidth + 150.0f, (float)screenHeight - 860.0f}, (float)screenHeight / 17.0f,
+                   (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 860.0f}, (float)screenHeight / 17.0f,
                    1.0f, color_picked);
+    
 
         while (recty < screenHeight) {
             while (rectx < screenWidth) {
-                DrawRectangle(rectx, recty, pixel_size, pixel_size,
-                              BLACK); // draws cell and if cell has color more than 0 it adds sand based on the color
+                // draws cell and if cell has color more than 0 it adds sand based on the color
+                DrawRectangle(rectx, recty, pixel_size, pixel_size, BLACK);
                 if (color[i] == 1) {
                     DrawRectangle(rectx, recty, pixel_size, pixel_size, RED);
                 } else if (color[i] == 2) {
