@@ -470,8 +470,14 @@ while (crash_checker != screenWidth / pixel_size) {
                 color[pixels_test] == 8) {
                 BeginDrawing();
                 ClearBackground(WHITE);
-                DrawTextEx(monocraft, "you lost lol", (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 550.0f},
+                DrawTextEx(monocraft, TextFormat("you lost lol,"), (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 550.0f},
                            (float)screenHeight / 10.0f, 1.0f, BLACK);
+                if (score == 0) {
+                DrawTextEx(monocraft, TextFormat("you suck, you got NO score"), (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 350.0f},
+                           (float)screenHeight / 10.0f, 1.0f, BLACK);                    
+                }
+                DrawTextEx(monocraft, TextFormat("your score was %i", score), (Vector2){(float)screenWidth + 50.0f, (float)screenHeight - 350.0f},
+                           (float)screenHeight / 15.0f, 1.0f, BLACK);
                 EndDrawing();
 
 #ifndef __EMSCRIPTEN__
