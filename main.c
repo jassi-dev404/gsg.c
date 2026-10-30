@@ -222,7 +222,9 @@ int main(void) {
     }
 
     Font monocraft = LoadFontEx("assets/Monocraft.ttf", 96, 0, 0);
+
     Texture2D button = LoadTexture("assets/start.png");
+    Texture2D guide = LoadTexture("assets/Cool_guide.png");
     int btnState = 0;
     bool btnAction = false;
     float baseWidth = (float)button.width * 1.4f;
@@ -248,7 +250,8 @@ int main(void) {
     int score = 0;
     int score_thingy = 0;
     int score_thingy_updater = 0;
-    float multiplier_timer = 0.0f; // Declared outside the main loop
+    float multiplier_timer = 0.0f;
+    float guide_timer = 0.0f;
 
     while (!WindowShouldClose()) {
 
@@ -267,6 +270,7 @@ int main(void) {
                 btnState = 0;
             if (btnAction) {
                 start_screen = 0;
+                guide_timer = 0.0f;
             }
             if (btnState == 1 || btnState == 2) {
                 if (size_i < 30) {
@@ -281,6 +285,13 @@ int main(void) {
         }
 
         if (start_screen == 0) {
+            guide_timer = guide_timer + GetFrameTime();
+            if (guide_timer >= 9.0f) {
+                start_screen = 2;
+            }
+        }
+
+        if (start_screen == 2) {
             for (int step = 0; step < 2; step++) {
 
                 if (checker_down == 1) {
@@ -705,10 +716,8 @@ int main(void) {
                 z_var = 0;
                 q_var = 0;
 
-                // just a variable used to calculate which pixels have sand in em so that we can give em *gravity*
                 pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
 
-                // while it is more than 0 we will keep checking
                 while (pixels_test >= 0) {
                     if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                         color[pixels_test] == 8) {
@@ -720,16 +729,11 @@ int main(void) {
 
                         if (pixels_test + (screenWidth / pixel_size) <
                             (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
-                            // if the cell below is empty
                             if (color[pixels_test + (screenWidth / pixel_size)] == 0) {
-                                // adds sand to cell below
                                 color[pixels_test + (screenWidth / pixel_size)] = color[pixels_test];
-                                // removes sand from that cell
                                 color[pixels_test] = 0;
                             } else {
-                                // if below cell has sand but sand is not in cells left and right of it
                                 if (can_go_left && can_go_right) {
-                                    // uses rng to determine which cell should have sand
                                     random = rand() % 2;
                                     if (random == 0) {
                                         color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
@@ -738,11 +742,9 @@ int main(void) {
                                         color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                                         color[pixels_test] = 0;
                                     }
-                                    // if below cell and right cell does not have sand. put sand in left
                                 } else if (can_go_left) {
                                     color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
                                     color[pixels_test] = 0;
-                                    // if below cell and left cell does have sand. put sand in right
                                 } else if (can_go_right) {
                                     color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                                     color[pixels_test] = 0;
@@ -775,7 +777,7 @@ int main(void) {
         Color color_picked = BLACK;
         score_thingy = multiplier * score;
 
-        if (start_screen == 0) {
+        if (start_screen == 2) {
 
             if (score_thingy_updater < score_thingy) {
                 rand_4 = GetRandomValue(0, 7);
@@ -804,12 +806,11 @@ int main(void) {
                        (float)screenHeight / 11.0f, 1.0f, color_picked);
 
             DrawTextEx(monocraft, TextFormat("multiplier: %dx", multiplier),
-                       (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 560.0f},
-                       (float)screenHeight / 9.0f, 1.0f, color_picked);
+                       (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 560.0f}, (float)screenHeight / 9.0f,
+                       1.0f, color_picked);
 
             while (recty < screenHeight) {
                 while (rectx < screenWidth) {
-                    // draws cell and if cell has color more than 0 it adds sand based on the color
                     DrawRectangle(rectx, recty, pixel_size, pixel_size, BLACK);
                     if (color[i] == 1) {
                         DrawRectangle(rectx, recty, pixel_size, pixel_size, RED);
@@ -840,8 +841,8 @@ int main(void) {
         }
         if (start_screen == 1) {
             DrawTextEx(monocraft, "welcome to gsg.c",
-                       (Vector2){(float)screenWidth / 2 - 140, (float)screenHeight - 850},
-                       (float)screenHeight / 6.0f, 1.0f, BLACK);
+                       (Vector2){(float)screenWidth / 2 - 140, (float)screenHeight - 850}, (float)screenHeight / 6.0f,
+                       1.0f, BLACK);
             DrawTextEx(monocraft, "(generic sand game).c",
                        (Vector2){(float)screenWidth / 2 + 25, (float)screenHeight - 300.0f},
                        (float)screenHeight / 10.0f, 1.0f, BLACK);
@@ -851,6 +852,11 @@ int main(void) {
             Rectangle destRec = {btnBounds.x - ((float)size_i / 2.0f), btnBounds.y - ((float)size_i / 2.0f),
                                  (float)baseWidth + (float)size_i, (float)baseHeight + (float)size_i};
             DrawTexturePro(button, sourceRec, destRec, (Vector2){0, 0}, 0.0f, WHITE);
+        }
+        if (start_screen == 0) {
+            Rectangle guideSource = {0, 0, (float)guide.width, (float)guide.height};
+            Rectangle destRec = {0, 0, (float)actualscreenwidth, (float)actualscreenhieght};
+            DrawTexturePro(guide, guideSource, destRec, (Vector2){0, 0}, 0.0f, WHITE);
         }
         EndDrawing();
     }
