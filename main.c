@@ -37,6 +37,8 @@ static int seen_line[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int line_stack[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int line_cells[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int seen_stamp = 0;
+static Color pixels[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
+static Texture2D gridTex;
 
 // global counters
 int counter_main = 0;
@@ -242,6 +244,10 @@ int O_shape(int color_sand, int cell_pos) {
 int main(void) {
     InitWindow(actualscreenwidth, actualscreenhieght, "generic sand game.c");
     SetTargetFPS(60);
+    Image gridImg = GenImageColor(screenWidth / pixel_size, screenHeight / pixel_size, BLACK);
+    gridTex = LoadTextureFromImage(gridImg);
+    UnloadImage(gridImg);
+    SetTextureFilter(gridTex, TEXTURE_FILTER_POINT);
 
     // load assets
     Font monocraft = LoadFontEx("assets/Monocraft.ttf", 96, 0, 0);
@@ -890,23 +896,24 @@ int main(void) {
             // draw grid
             while (recty < screenHeight) {
                 while (rectx < screenWidth) {
-                    DrawRectangle(rectx, recty, pixel_size, pixel_size, BLACK);
                     if (color[i] == 1) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, RED);
+                        pixels[i] = RED;
                     } else if (color[i] == 2) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, RED);
+                        pixels[i] = RED;
                     } else if (color[i] == 3) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, GREEN);
+                        pixels[i] = GREEN;
                     } else if (color[i] == 4) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, GREEN);
+                        pixels[i] = GREEN;
                     } else if (color[i] == 5) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, BLUE);
+                        pixels[i] = BLUE;
                     } else if (color[i] == 6) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, BLUE);
+                        pixels[i] = BLUE;
                     } else if (color[i] == 7) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, YELLOW);
+                        pixels[i] = YELLOW;
                     } else if (color[i] == 8) {
-                        DrawRectangle(rectx, recty, pixel_size, pixel_size, YELLOW);
+                        pixels[i] = YELLOW;
+                    } else {
+                        pixels[i] = BLACK;
                     }
                     rectx = rectx + pixel_size;
                     i_x = i_x + 1;
@@ -917,6 +924,8 @@ int main(void) {
                 recty = recty + pixel_size;
                 i_y = i_y + 1;
             }
+            UpdateTexture(gridTex, pixels);
+            DrawTextureEx(gridTex, (Vector2){0, 0}, 0.0f, (float)pixel_size, WHITE);
         }
 
         // draw start screen
