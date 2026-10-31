@@ -32,7 +32,9 @@
 
   <script>
     var canvasElement = document.getElementById("canvas");
-
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+          window.location.replace("/mobile.html");
+    }
     function goFullscreen() {
       var elem = document.documentElement;
       if (elem.requestFullscreen) {
