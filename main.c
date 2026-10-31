@@ -1,6 +1,34 @@
 #include "raylib.h"
 #include "tinyfiledialogs.h"
 #include <stdlib.h>
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+#ifndef EMSCRIPTEN_KEEPALIVE
+#define EMSCRIPTEN_KEEPALIVE
+#endif
+static bool customLeftPressed = false;
+static bool customRightPressed = false;
+static bool customDownPressed = false;
+static bool customSkipGuidePressed = false;
+EMSCRIPTEN_KEEPALIVE
+void SetMoveLeft(bool state) {
+    customLeftPressed = state;
+}
+EMSCRIPTEN_KEEPALIVE
+void SetMoveRight(bool state) {
+    customRightPressed = state;
+}
+EMSCRIPTEN_KEEPALIVE
+void SetMoveDown(bool state) {
+    customDownPressed = state;
+}
+EMSCRIPTEN_KEEPALIVE
+void SetSkipGuide(bool state) {
+    if (state) {
+        customSkipGuidePressed = true;
+    }
+}
 
 enum { screenWidth = 699, actualscreenwidth = 1590, screenHeight = 900, actualscreenhieght = 900, pixel_size = 3 };
 
@@ -314,7 +342,10 @@ int main(void) {
               game_state = 2;
             }
         }
-
+        if (customSkipGuidePressed) {
+          skip_guide = 3;
+          customSkipGuidePressed = false;
+        }
         // main game loop
         if (game_state == 2) {
             for (int step = 0; step < 2; step++) {
@@ -343,7 +374,7 @@ int main(void) {
                 }
 
                 // movement checks
-                if (IsKeyDown(KEY_LEFT)) {
+                if (IsKeyDown(KEY_LEFT) || customLeftPressed) {
                     can_move = 1;
                     j = 0;
                     while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
@@ -376,8 +407,7 @@ int main(void) {
                         }
                     }
                 }
-
-                if (IsKeyDown(KEY_RIGHT)) {
+                if (IsKeyDown(KEY_RIGHT) || customRightPressed) {
                     can_move = 1;
                     j = 0;
                     while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
@@ -410,8 +440,7 @@ int main(void) {
                         }
                     }
                 }
-
-                if (IsKeyDown(KEY_DOWN)) {
+                if (IsKeyDown(KEY_DOWN) || customDownPressed) {
                     can_move = 1;
                     j = 0;
                     while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
