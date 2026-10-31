@@ -232,6 +232,7 @@ int main(void) {
 
     // game states
     int game_state = 1;
+    int skip_guide = 0;
     float guide_timer = 0.0f;
 
     // gameplay flags
@@ -305,6 +306,12 @@ int main(void) {
             guide_timer = guide_timer + GetFrameTime();
             if (guide_timer >= 9.0f) {
                 game_state = 2;
+            }
+            if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+              skip_guide = skip_guide + 1;
+            }
+            if (skip_guide == 3) {
+              game_state = 2;
             }
         }
 
