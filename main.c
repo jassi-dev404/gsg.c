@@ -10,203 +10,204 @@ static int line_stack[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int line_cells[(screenWidth * screenHeight) / (pixel_size * pixel_size)];
 static int seen_stamp = 0;
 
-int var_stuff = 0;
-int var_stuff_2 = 0;
-int var_stuff_3 = 1;
-int y_var;
+// global counters
+int counter_main = 0;
+int counter_sub = 0;
+int counter_alt = 1;
+int save_pos;
 
-int L_shape(int color_sand, int x_var) {
-    int y_var = x_var;
-    while (var_stuff_2 != 30) {
-        while (var_stuff != 15) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+int L_shape(int color_sand, int cell_pos) {
+    int save_pos = cell_pos;
+    while (counter_sub != 30) {
+        while (counter_main != 15) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
-    var_stuff_2 = 0;
-    var_stuff = 0;
+    counter_sub = 0;
+    counter_main = 0;
 
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 35) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+    while (counter_sub != 15) {
+        while (counter_main != 35) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
 
-    var_stuff = 0;
-    var_stuff_2 = 0;
-    var_stuff_3 = 0;
-    y_var = 0;
+    counter_main = 0;
+    counter_sub = 0;
+    counter_alt = 0;
+    save_pos = 0;
     return 0;
 }
 
-int L_shape_reverse(int color_sand, int x_var) {
-    int y_var = x_var;
-    while (var_stuff_2 != 30) {
-        while (var_stuff != 15) {
-            color[x_var] = color_sand;
-            x_var = x_var - 1;
-            var_stuff = var_stuff + 1;
+int L_shape_reverse(int color_sand, int cell_pos) {
+    int save_pos = cell_pos;
+    while (counter_sub != 30) {
+        while (counter_main != 15) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos - 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
-    var_stuff_2 = 0;
-    var_stuff = 0;
+    counter_sub = 0;
+    counter_main = 0;
 
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 35) {
-            color[x_var] = color_sand;
-            x_var = x_var - 1;
-            var_stuff = var_stuff + 1;
+    while (counter_sub != 15) {
+        while (counter_main != 35) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos - 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
 
-    var_stuff = 0;
-    var_stuff_2 = 0;
-    var_stuff_3 = 0;
-    y_var = 0;
+    counter_main = 0;
+    counter_sub = 0;
+    counter_alt = 0;
+    save_pos = 0;
     return 0;
 }
 
-int I_shape(int color_sand, int x_var) {
-    int y_var = x_var;
-    while (var_stuff_2 != 60) {
-        while (var_stuff != 15) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+int I_shape(int color_sand, int cell_pos) {
+    int save_pos = cell_pos;
+    while (counter_sub != 60) {
+        while (counter_main != 15) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
-    var_stuff_2 = 0;
-    var_stuff = 0;
-    var_stuff_3 = 0;
-    y_var = 0;
+    counter_sub = 0;
+    counter_main = 0;
+    counter_alt = 0;
+    save_pos = 0;
     return 0;
 }
 
-int S_shape(int color_sand, int x_var) {
-    int y_var = x_var;
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 30) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+int S_shape(int color_sand, int cell_pos) {
+    int save_pos = cell_pos;
+    while (counter_sub != 15) {
+        while (counter_main != 30) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
-    var_stuff_2 = 0;
-    var_stuff = 0;
+    counter_sub = 0;
+    counter_main = 0;
 
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 30) {
-            color[x_var] = color_sand;
-            x_var = x_var - 1;
-            var_stuff = var_stuff + 1;
+    while (counter_sub != 15) {
+        while (counter_main != 30) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos - 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
 
-    var_stuff = 0;
-    var_stuff_2 = 0;
-    var_stuff_3 = 0;
-    y_var = 0;
+    counter_main = 0;
+    counter_sub = 0;
+    counter_alt = 0;
+    save_pos = 0;
     return 0;
 }
 
-int S_shape_reverse(int color_sand, int x_var) {
-    int y_var = x_var;
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 30) {
-            color[x_var] = color_sand;
-            x_var = x_var - 1;
-            var_stuff = var_stuff + 1;
+int S_shape_reverse(int color_sand, int cell_pos) {
+    int save_pos = cell_pos;
+    while (counter_sub != 15) {
+        while (counter_main != 30) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos - 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
-    var_stuff_2 = 0;
-    var_stuff = 0;
+    counter_sub = 0;
+    counter_main = 0;
 
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 30) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+    while (counter_sub != 15) {
+        while (counter_main != 30) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
 
-    var_stuff = 0;
-    var_stuff_2 = 0;
-    var_stuff_3 = 0;
-    y_var = 0;
+    counter_main = 0;
+    counter_sub = 0;
+    counter_alt = 0;
+    save_pos = 0;
     return 0;
 }
 
-int O_shape(int color_sand, int x_var) {
-    int y_var = x_var;
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 30) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+int O_shape(int color_sand, int cell_pos) {
+    int save_pos = cell_pos;
+    while (counter_sub != 15) {
+        while (counter_main != 30) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
-    var_stuff_2 = 0;
-    var_stuff = 0;
+    counter_sub = 0;
+    counter_main = 0;
 
-    while (var_stuff_2 != 15) {
-        while (var_stuff != 30) {
-            color[x_var] = color_sand;
-            x_var = x_var + 1;
-            var_stuff = var_stuff + 1;
+    while (counter_sub != 15) {
+        while (counter_main != 30) {
+            color[cell_pos] = color_sand;
+            cell_pos = cell_pos + 1;
+            counter_main = counter_main + 1;
         }
-        var_stuff = 0;
-        x_var = y_var + (screenWidth / pixel_size) * var_stuff_3;
-        var_stuff_2 = var_stuff_2 + 1;
-        var_stuff_3 = var_stuff_3 + 1;
+        counter_main = 0;
+        cell_pos = save_pos + (screenWidth / pixel_size) * counter_alt;
+        counter_sub = counter_sub + 1;
+        counter_alt = counter_alt + 1;
     }
 
-    var_stuff = 0;
-    var_stuff_2 = 0;
-    var_stuff_3 = 0;
-    y_var = 0;
+    counter_main = 0;
+    counter_sub = 0;
+    counter_alt = 0;
+    save_pos = 0;
     return 0;
 }
 
@@ -214,17 +215,12 @@ int main(void) {
     InitWindow(actualscreenwidth, actualscreenhieght, "generic sand game.c");
     SetTargetFPS(60);
 
-    int j = 0;
-    int random = 0;
-    while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
-        color[j] = 0;
-        j = j + 1;
-    }
-
+    // load assets
     Font monocraft = LoadFontEx("assets/Monocraft.ttf", 96, 0, 0);
-
     Texture2D button = LoadTexture("assets/start.png");
     Texture2D guide = LoadTexture("assets/Cool_guide.png");
+
+    // UI variables
     int btnState = 0;
     bool btnAction = false;
     float baseWidth = (float)button.width * 1.4f;
@@ -232,32 +228,52 @@ int main(void) {
     Rectangle sourceRec = {0, 0, (float)button.width, (float)button.height};
     Vector2 mousePoint = {0.0f, 0.0f};
     Rectangle btnBounds = {screenWidth / 2 - 50, screenHeight / 2 - 150, (float)baseWidth, (float)baseHeight};
-    int safe_to_move = 1;
-    int z_var = 0;
-    int q_var = 1;
-    int i_var = 0;
-    int target_var = 0;
-    int checker_down = 1;
-    int checker_helper = 0;
-    int rand_2 = 0;
-    int rand_3 = 0;
-    int true_var = 0;
-    int crash_checker = 0;
-    int start_screen = 1;
-    int e_var = 0;
-    int size_i = 0;
-    int multiplier = 1;
-    int score = 0;
-    int score_thingy = 0;
-    int score_thingy_updater = 0;
-    float multiplier_timer = 0.0f;
+    int btn_anim_size = 0;
+
+    // game states
+    int game_state = 1;
     float guide_timer = 0.0f;
 
-    while (!WindowShouldClose()) {
+    // gameplay flags
+    int needs_shape = 1;
+    int can_move = 1;
+    int top_check = 0;
+    int fall_rand = 0;
+    int shape_color = 0;
+    int shape_type = 0;
 
+    // score variables
+    int score = 0;
+    int total_score = 0;
+    int display_score = 0;
+    int multiplier = 1;
+    float multiplier_timer = 0.0f;
+
+    // iterators
+    int grid_y = 0;
+    int temp_idx = 1;
+    int col_offset = 0;
+    int pop_idx = 0;
+    int target_color = 0;
+    int should_delete = 0;
+
+    // extra stuff
+    int spare = 5;
+    int spare_fixer = spare;
+    int checker_helper = 0;
+
+    // grid init
+    int j = 0;
+    while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
+        color[j] = 0;
+        j = j + 1;
+    }
+
+    while (!WindowShouldClose()) {
         mousePoint = GetMousePosition();
 
-        if (start_screen == 1) {
+        // start screen
+        if (game_state == 1) {
             btnAction = false;
             if (CheckCollisionPointRec(mousePoint, btnBounds)) {
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
@@ -269,67 +285,71 @@ int main(void) {
             } else
                 btnState = 0;
             if (btnAction) {
-                start_screen = 0;
+                game_state = 0;
                 guide_timer = 0.0f;
             }
             if (btnState == 1 || btnState == 2) {
-                if (size_i < 30) {
-                    size_i = size_i + 2;
+                if (btn_anim_size < 30) {
+                    btn_anim_size = btn_anim_size + 2;
                 }
             }
             if (btnState == 0) {
-                if (size_i > 0) {
-                    size_i = size_i - 2;
+                if (btn_anim_size > 0) {
+                    btn_anim_size = btn_anim_size - 2;
                 }
             }
         }
 
-        if (start_screen == 0) {
+        // guide screen
+        if (game_state == 0) {
             guide_timer = guide_timer + GetFrameTime();
             if (guide_timer >= 9.0f) {
-                start_screen = 2;
+                game_state = 2;
             }
         }
 
-        if (start_screen == 2) {
+        // main game loop
+        if (game_state == 2) {
             for (int step = 0; step < 2; step++) {
 
-                if (checker_down == 1) {
-                    rand_2 = GetRandomValue(0, 3) * 2 + 1;
-                    rand_3 = GetRandomValue(0, 5);
-                    while (rand_2 == 0) {
-                        rand_2 = rand() % 9;
+                // spawn random shape
+                if (needs_shape == 1) {
+                    shape_color = GetRandomValue(0, 3) * 2 + 1;
+                    shape_type = GetRandomValue(0, 5);
+                    while (shape_color == 0) {
+                        shape_color = rand() % 9;
                     }
-                    if (rand_3 == 0) {
-                        L_shape(rand_2, screenWidth / pixel_size / pixel_size + 40);
-                    } else if (rand_3 == 1) {
-                        L_shape_reverse(rand_2, screenWidth / pixel_size / pixel_size + 40);
-                    } else if (rand_3 == 2) {
-                        I_shape(rand_2, screenWidth / pixel_size / pixel_size + 40);
-                    } else if (rand_3 == 3) {
-                        S_shape(rand_2, screenWidth / pixel_size / pixel_size + 40);
-                    } else if (rand_3 == 4) {
-                        S_shape_reverse(rand_2, screenWidth / pixel_size / pixel_size + 40);
-                    } else if (rand_3 == 5) {
-                        O_shape(rand_2, screenWidth / pixel_size / pixel_size + 40);
+                    if (shape_type == 0) {
+                        L_shape(shape_color, screenWidth / pixel_size / pixel_size + 40);
+                    } else if (shape_type == 1) {
+                        L_shape_reverse(shape_color, screenWidth / pixel_size / pixel_size + 40);
+                    } else if (shape_type == 2) {
+                        I_shape(shape_color, screenWidth / pixel_size / pixel_size + 40);
+                    } else if (shape_type == 3) {
+                        S_shape(shape_color, screenWidth / pixel_size / pixel_size + 40);
+                    } else if (shape_type == 4) {
+                        S_shape_reverse(shape_color, screenWidth / pixel_size / pixel_size + 40);
+                    } else if (shape_type == 5) {
+                        O_shape(shape_color, screenWidth / pixel_size / pixel_size + 40);
                     }
-                    checker_down = 0;
+                    needs_shape = 0;
                 }
 
+                // movement checks
                 if (IsKeyDown(KEY_LEFT)) {
-                    safe_to_move = 1;
+                    can_move = 1;
                     j = 0;
                     while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                         if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
                             if ((j % (screenWidth / pixel_size)) == 0 || color[j - 1] == 2 || color[j - 1] == 4 ||
                                 color[j - 1] == 6 || color[j - 1] == 8) {
-                                safe_to_move = 0;
+                                can_move = 0;
                                 break;
                             }
                         }
                         j = j + 1;
                     }
-                    if (safe_to_move == 1) {
+                    if (can_move == 1) {
                         int pixels_test = 0;
                         while (pixels_test < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                             if (color[pixels_test] == 1) {
@@ -351,19 +371,19 @@ int main(void) {
                 }
 
                 if (IsKeyDown(KEY_RIGHT)) {
-                    safe_to_move = 1;
+                    can_move = 1;
                     j = 0;
                     while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                         if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
                             if ((j % (screenWidth / pixel_size)) == (screenWidth / pixel_size - 1) ||
                                 color[j + 1] == 2 || color[j + 1] == 4 || color[j + 1] == 6 || color[j + 1] == 8) {
-                                safe_to_move = 0;
+                                can_move = 0;
                                 break;
                             }
                         }
                         j = j + 1;
                     }
-                    if (safe_to_move == 1) {
+                    if (can_move == 1) {
                         int pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
                         while (pixels_test >= 0) {
                             if (color[pixels_test] == 1) {
@@ -385,7 +405,7 @@ int main(void) {
                 }
 
                 if (IsKeyDown(KEY_DOWN)) {
-                    safe_to_move = 1;
+                    can_move = 1;
                     j = 0;
                     while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                         if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
@@ -395,13 +415,13 @@ int main(void) {
                                 color[j + (screenWidth / pixel_size)] == 4 ||
                                 color[j + (screenWidth / pixel_size)] == 6 ||
                                 color[j + (screenWidth / pixel_size)] == 8) {
-                                safe_to_move = 0;
+                                can_move = 0;
                                 break;
                             }
                         }
                         j = j + 1;
                     }
-                    if (safe_to_move == 1) {
+                    if (can_move == 1) {
                         int pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
                         while (pixels_test >= 0) {
                             if (color[pixels_test] == 1) {
@@ -439,7 +459,8 @@ int main(void) {
                     }
                 }
 
-                safe_to_move = 1;
+                // automatic falling
+                can_move = 1;
                 j = 0;
                 while (j < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
                     if (color[j] == 1 || color[j] == 3 || color[j] == 5 || color[j] == 7) {
@@ -447,13 +468,14 @@ int main(void) {
                                 (screenWidth * screenHeight) / (pixel_size * pixel_size) ||
                             color[j + (screenWidth / pixel_size)] == 2 || color[j + (screenWidth / pixel_size)] == 4 ||
                             color[j + (screenWidth / pixel_size)] == 6 || color[j + (screenWidth / pixel_size)] == 8) {
-                            safe_to_move = 0;
+                            can_move = 0;
                             break;
                         }
                     }
                     j = j + 1;
                 }
-                if (safe_to_move == 1) {
+
+                if (can_move == 1) {
                     int pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
                     while (pixels_test >= 0) {
                         if (color[pixels_test] == 1) {
@@ -502,24 +524,27 @@ int main(void) {
                     pixels_test = pixels_test + 1;
                 }
                 if (still_falling == 0) {
-                    checker_down = 1;
+                    needs_shape = 1;
                 }
                 checker_helper = 0;
 
                 pixels_test = 0;
 
+                // reset stamp check
                 if (seen_stamp == 2147483647) {
-                    q_var = 0;
-                    while (q_var < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
-                        seen_line[q_var] = 0;
-                        q_var = q_var + 1;
+                    temp_idx = 0;
+                    while (temp_idx < (screenWidth * screenHeight) / (pixel_size * pixel_size)) {
+                        seen_line[temp_idx] = 0;
+                        temp_idx = temp_idx + 1;
                     }
-                    q_var = 0;
+                    temp_idx = 0;
                     seen_stamp = 1;
                 } else {
                     seen_stamp = seen_stamp + 1;
                 }
-                while (crash_checker != screenWidth / pixel_size) {
+
+                // game over check
+                while (top_check != screenWidth / pixel_size) {
                     if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                         color[pixels_test] == 8) {
                         BeginDrawing();
@@ -542,67 +567,74 @@ int main(void) {
 #endif
                         exit(0);
                     }
-                    crash_checker = crash_checker + 1;
+                    top_check = top_check + 1;
                     pixels_test = pixels_test + 1;
                 }
 
-                crash_checker = 0;
+                top_check = 0;
                 pixels_test = 0;
 
-                while (z_var != screenHeight / pixel_size) {
+                // line clear logic
+                while (grid_y != screenHeight / pixel_size) {
                     if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                         color[pixels_test] == 8) {
-                        q_var = 1;
+                        temp_idx = 1;
                         int row_matches = 1;
-                        while (q_var != screenWidth / pixel_size) {
-                            if (color[pixels_test + q_var] != color[pixels_test]) {
+                        while (temp_idx != screenWidth / pixel_size) {
+                            if (color[pixels_test + temp_idx] != color[pixels_test]) {
                                 row_matches = 0;
                                 break;
                             }
-                            q_var = q_var + 1;
-                            true_var = 1;
+                            temp_idx = temp_idx + 1;
+                            should_delete = 1;
                         }
                         if (seen_line[pixels_test] != seen_stamp) {
                             int stride = screenWidth / pixel_size;
                             int board_rows = screenHeight / pixel_size;
                             int board_n = (screenWidth * screenHeight) / (pixel_size * pixel_size);
-                            int save_a = var_stuff;
-                            int save_b = var_stuff_2;
-                            int save_c = var_stuff_3;
+
+                            // floodfill state save
+                            int save_a = counter_main;
+                            int save_b = counter_sub;
+                            int save_c = counter_alt;
+
                             int dx_var;
                             int dy_var;
                             int col_var;
                             int row_var;
-                            target_var = color[pixels_test];
+
+                            target_color = color[pixels_test];
                             seen_line[pixels_test] = seen_stamp;
                             line_stack[0] = pixels_test;
                             line_cells[0] = pixels_test;
-                            var_stuff = 1;
-                            var_stuff_3 = 1;
-                            true_var = 0;
-                            while (var_stuff != 0) {
-                                var_stuff = var_stuff - 1;
-                                e_var = line_stack[var_stuff];
-                                if ((e_var % stride) == (stride - 1)) {
-                                    true_var = 1;
+
+                            counter_main = 1;
+                            counter_alt = 1;
+                            should_delete = 0;
+
+                            while (counter_main != 0) {
+                                counter_main = counter_main - 1;
+                                pop_idx = line_stack[counter_main];
+                                if ((pop_idx % stride) == (stride - 1)) {
+                                    should_delete = 1;
                                 }
                                 dy_var = -1;
                                 while (dy_var <= 1) {
                                     dx_var = -1;
                                     while (dx_var <= 1) {
                                         if (dx_var != 0 || dy_var != 0) {
-                                            col_var = (e_var % stride) + dx_var;
-                                            row_var = (e_var / stride) + dy_var;
+                                            col_var = (pop_idx % stride) + dx_var;
+                                            row_var = (pop_idx / stride) + dy_var;
                                             if (col_var >= 0 && col_var < stride && row_var >= 0 &&
                                                 row_var < board_rows) {
-                                                q_var = row_var * stride + col_var;
-                                                if (q_var >= 0 && q_var < board_n && seen_line[q_var] != seen_stamp &&
-                                                    color[q_var] == target_var) {
-                                                    seen_line[q_var] = seen_stamp;
-                                                    line_stack[var_stuff] = q_var;
-                                                    var_stuff = var_stuff + 1;
-                                                    line_cells[var_stuff_3] = q_var;
-                                                    var_stuff_3 = var_stuff_3 + 1;
+                                                temp_idx = row_var * stride + col_var;
+                                                if (temp_idx >= 0 && temp_idx < board_n && seen_line[temp_idx] != seen_stamp &&
+                                                    color[temp_idx] == target_color) {
+                                                    seen_line[temp_idx] = seen_stamp;
+                                                    line_stack[counter_main] = temp_idx;
+                                                    counter_main = counter_main + 1;
+                                                    line_cells[counter_alt] = temp_idx;
+                                                    counter_alt = counter_alt + 1;
                                                 }
                                             }
                                         }
@@ -611,113 +643,119 @@ int main(void) {
                                     dy_var = dy_var + 1;
                                 }
                             }
-                            if (true_var == 1) {
-                                var_stuff = 0;
-                                while (var_stuff != var_stuff_3) {
-                                    color[line_cells[var_stuff]] = 0;
-                                    var_stuff = var_stuff + 1;
+
+                            // execute deletion
+                            if (should_delete == 1) {
+                                counter_main = 0;
+                                while (counter_main != counter_alt) {
+                                    color[line_cells[counter_main]] = 0;
+                                    counter_main = counter_main + 1;
                                     score = score + 1;
                                 }
                                 row_matches = 0;
                                 multiplier = multiplier + 1;
                             }
-                            var_stuff = save_a;
-                            var_stuff_2 = save_b;
-                            var_stuff_3 = save_c;
-                            e_var = 0;
-                            q_var = 0;
-                            true_var = 0;
+
+                            // restore state
+                            counter_main = save_a;
+                            counter_sub = save_b;
+                            counter_alt = save_c;
+                            pop_idx = 0;
+                            temp_idx = 0;
+                            should_delete = 0;
                         }
 
+                        // secondary cleanup
                         if (row_matches == 1) {
-                            i_var = 0;
-                            target_var = color[pixels_test + i_var];
-                            while (i_var != screenWidth / pixel_size) {
-                                if ((pixels_test + i_var) % (screenWidth / pixel_size) != 0 &&
-                                    color[pixels_test + i_var - 1] == target_var) {
+                            col_offset = 0;
+                            target_color = color[pixels_test + col_offset];
+                            while (col_offset != screenWidth / pixel_size) {
+                                if ((pixels_test + col_offset) % (screenWidth / pixel_size) != 0 &&
+                                    color[pixels_test + col_offset - 1] == target_color) {
                                     while (true) {
-                                        q_var = q_var + 1;
-                                        if (i_var - 1 - q_var + pixels_test >= 0 &&
-                                            (i_var - 1 - q_var + pixels_test) % (screenWidth / pixel_size) !=
+                                        temp_idx = temp_idx + 1;
+                                        if (col_offset - 1 - temp_idx + pixels_test >= 0 &&
+                                            (col_offset - 1 - temp_idx + pixels_test) % (screenWidth / pixel_size) !=
                                                 (screenWidth / pixel_size - 1) &&
-                                            target_var == color[i_var - 1 - q_var + pixels_test]) {
-                                            color[i_var - 1 - q_var + pixels_test] = color[i_var - 1 - pixels_test];
-                                            color[i_var - 1 - q_var + pixels_test] = 0;
+                                            target_color == color[col_offset - 1 - temp_idx + pixels_test]) {
+                                            color[col_offset - 1 - temp_idx + pixels_test] = color[col_offset - 1 - pixels_test];
+                                            color[col_offset - 1 - temp_idx + pixels_test] = 0;
                                         } else {
                                             break;
                                         }
                                     }
-                                    color[i_var - 1 + pixels_test] = 0;
-                                    q_var = 0;
+                                    color[col_offset - 1 + pixels_test] = 0;
+                                    temp_idx = 0;
                                 }
-                                if ((pixels_test + i_var) % (screenWidth / pixel_size) !=
+                                if ((pixels_test + col_offset) % (screenWidth / pixel_size) !=
                                         (screenWidth / pixel_size - 1) &&
-                                    color[i_var + 1 + pixels_test] == target_var) {
+                                    color[col_offset + 1 + pixels_test] == target_color) {
                                     while (true) {
-                                        q_var = q_var + 1;
-                                        if (i_var + 1 + q_var + pixels_test <
+                                        temp_idx = temp_idx + 1;
+                                        if (col_offset + 1 + temp_idx + pixels_test <
                                                 screenWidth * screenHeight / (pixel_size * pixel_size) &&
-                                            (i_var + 1 + q_var + pixels_test) % (screenWidth / pixel_size) != 0 &&
-                                            target_var == color[i_var + 1 + q_var + pixels_test]) {
-                                            color[i_var + 1 + q_var + pixels_test] = 0;
+                                            (col_offset + 1 + temp_idx + pixels_test) % (screenWidth / pixel_size) != 0 &&
+                                            target_color == color[col_offset + 1 + temp_idx + pixels_test]) {
+                                            color[col_offset + 1 + temp_idx + pixels_test] = 0;
                                         } else {
                                             break;
                                         }
                                     }
-                                    color[i_var + 1 + pixels_test] = 0;
-                                    q_var = 0;
+                                    color[col_offset + 1 + pixels_test] = 0;
+                                    temp_idx = 0;
                                 }
-                                if ((pixels_test + i_var + (screenWidth / pixel_size)) <
+                                if ((pixels_test + col_offset + (screenWidth / pixel_size)) <
                                         screenWidth * screenHeight / (pixel_size * pixel_size) &&
-                                    color[i_var + (screenWidth / pixel_size) + pixels_test] == target_var) {
+                                    color[col_offset + (screenWidth / pixel_size) + pixels_test] == target_color) {
                                     while (true) {
-                                        q_var = q_var + 1;
-                                        if (i_var + (screenWidth / pixel_size) + (q_var * (screenWidth / pixel_size)) +
-                                                    pixels_test <
+                                        temp_idx = temp_idx + 1;
+                                        if (col_offset + (screenWidth / pixel_size) + (temp_idx * (screenWidth / pixel_size)) +
+                                                pixels_test <
                                                 screenWidth * screenHeight / (pixel_size * pixel_size) &&
-                                            target_var == color[i_var + (screenWidth / pixel_size) +
-                                                                (q_var * (screenWidth / pixel_size)) + pixels_test]) {
-                                            color[i_var + (screenWidth / pixel_size) +
-                                                  (q_var * (screenWidth / pixel_size)) + pixels_test] = 0;
+                                            target_color == color[col_offset + (screenWidth / pixel_size) +
+                                                                    (temp_idx * (screenWidth / pixel_size)) + pixels_test]) {
+                                            color[col_offset + (screenWidth / pixel_size) +
+                                                  (temp_idx * (screenWidth / pixel_size)) + pixels_test] = 0;
                                         } else {
                                             break;
                                         }
                                     }
-                                    color[i_var + (screenWidth / pixel_size) + pixels_test] = 0;
-                                    q_var = 0;
+                                    color[col_offset + (screenWidth / pixel_size) + pixels_test] = 0;
+                                    temp_idx = 0;
                                 }
-                                if ((pixels_test + i_var - (screenWidth / pixel_size)) >= 0 &&
-                                    color[pixels_test + i_var - (screenWidth / pixel_size)] == target_var) {
+                                if ((pixels_test + col_offset - (screenWidth / pixel_size)) >= 0 &&
+                                    color[pixels_test + col_offset - (screenWidth / pixel_size)] == target_color) {
                                     while (true) {
-                                        q_var = q_var + 1;
-                                        if (i_var - (screenWidth / pixel_size) - (q_var * (screenWidth / pixel_size)) +
-                                                    pixels_test >=
+                                        temp_idx = temp_idx + 1;
+                                        if (col_offset - (screenWidth / pixel_size) - (temp_idx * (screenWidth / pixel_size)) +
+                                                pixels_test >=
                                                 0 &&
-                                            target_var == color[i_var - (screenWidth / pixel_size) -
-                                                                (q_var * (screenWidth / pixel_size)) + pixels_test]) {
-                                            color[i_var - (screenWidth / pixel_size) -
-                                                  (q_var * (screenWidth / pixel_size)) + pixels_test] = 0;
+                                            target_color == color[col_offset - (screenWidth / pixel_size) -
+                                                                    (temp_idx * (screenWidth / pixel_size)) + pixels_test]) {
+                                            color[col_offset - (screenWidth / pixel_size) -
+                                                  (temp_idx * (screenWidth / pixel_size)) + pixels_test] = 0;
                                         } else {
                                             break;
                                         }
                                     }
-                                    color[i_var - (screenWidth / pixel_size) + pixels_test] = 0;
-                                    q_var = 0;
+                                    color[col_offset - (screenWidth / pixel_size) + pixels_test] = 0;
+                                    temp_idx = 0;
                                 }
-                                color[pixels_test + i_var] = 0;
-                                i_var = i_var + 1;
-                                true_var = 0;
+                                color[pixels_test + col_offset] = 0;
+                                col_offset = col_offset + 1;
+                                should_delete = 0;
                             }
                         }
                     }
                     pixels_test = pixels_test + (screenWidth / pixel_size);
-                    z_var = z_var + 1;
+                    grid_y = grid_y + 1;
                 }
-                z_var = 0;
-                q_var = 0;
+                grid_y = 0;
+                temp_idx = 0;
 
                 pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
 
+                // sand physics
                 while (pixels_test >= 0) {
                     if (color[pixels_test] == 2 || color[pixels_test] == 4 || color[pixels_test] == 6 ||
                         color[pixels_test] == 8) {
@@ -734,11 +772,11 @@ int main(void) {
                                 color[pixels_test] = 0;
                             } else {
                                 if (can_go_left && can_go_right) {
-                                    random = rand() % 2;
-                                    if (random == 0) {
+                                    fall_rand = rand() % 2;
+                                    if (fall_rand == 0) {
                                         color[pixels_test + screenWidth / pixel_size - 1] = color[pixels_test];
                                         color[pixels_test] = 0;
-                                    } else if (random == 1) {
+                                    } else if (fall_rand == 1) {
                                         color[pixels_test + screenWidth / pixel_size + 1] = color[pixels_test];
                                         color[pixels_test] = 0;
                                     }
@@ -756,6 +794,7 @@ int main(void) {
                 }
                 pixels_test = (screenWidth * screenHeight) / (pixel_size * pixel_size) - 1;
 
+                // update timer
                 multiplier_timer = multiplier_timer + GetFrameTime();
                 if (multiplier_timer >= 5.0f) {
                     if (multiplier > 1) {
@@ -766,6 +805,7 @@ int main(void) {
             }
         }
 
+        // draw calls
         BeginDrawing();
         ClearBackground(WHITE);
         int rectx = 0;
@@ -775,11 +815,12 @@ int main(void) {
         int i = 0;
         int rand_4 = 0;
         Color color_picked = BLACK;
-        score_thingy = multiplier * score;
+        total_score = multiplier * score;
 
-        if (start_screen == 2) {
+        if (game_state == 2) {
 
-            if (score_thingy_updater < score_thingy) {
+            // animate score
+            if (display_score < total_score) {
                 rand_4 = GetRandomValue(0, 7);
                 if (rand_4 == 0) {
                     color_picked = RED;
@@ -798,10 +839,11 @@ int main(void) {
                 } else if (rand_4 == 7) {
                     color_picked = MAGENTA;
                 }
-                score_thingy_updater = score_thingy_updater + 15;
+                display_score = display_score + 15;
             }
 
-            DrawTextEx(monocraft, TextFormat("score: %d,", score_thingy_updater),
+            // draw UI text
+            DrawTextEx(monocraft, TextFormat("score: %d,", display_score),
                        (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 860.0f},
                        (float)screenHeight / 11.0f, 1.0f, color_picked);
 
@@ -809,6 +851,7 @@ int main(void) {
                        (Vector2){(float)screenWidth + 100.0f, (float)screenHeight - 560.0f}, (float)screenHeight / 9.0f,
                        1.0f, color_picked);
 
+            // draw grid
             while (recty < screenHeight) {
                 while (rectx < screenWidth) {
                     DrawRectangle(rectx, recty, pixel_size, pixel_size, BLACK);
@@ -839,7 +882,9 @@ int main(void) {
                 i_y = i_y + 1;
             }
         }
-        if (start_screen == 1) {
+
+        // draw start screen
+        if (game_state == 1) {
             DrawTextEx(monocraft, "welcome to gsg.c",
                        (Vector2){(float)screenWidth / 2 - 140, (float)screenHeight - 850}, (float)screenHeight / 6.0f,
                        1.0f, BLACK);
@@ -849,11 +894,13 @@ int main(void) {
             DrawTextEx(monocraft, "in beta right now",
                        (Vector2){(float)screenWidth + 200.0f, (float)screenHeight - 200.0f},
                        (float)screenHeight / 13.0f, 1.0f, BLACK);
-            Rectangle destRec = {btnBounds.x - ((float)size_i / 2.0f), btnBounds.y - ((float)size_i / 2.0f),
-                                 (float)baseWidth + (float)size_i, (float)baseHeight + (float)size_i};
+            Rectangle destRec = {btnBounds.x - ((float)btn_anim_size / 2.0f), btnBounds.y - ((float)btn_anim_size / 2.0f),
+                                 (float)baseWidth + (float)btn_anim_size, (float)baseHeight + (float)btn_anim_size};
             DrawTexturePro(button, sourceRec, destRec, (Vector2){0, 0}, 0.0f, WHITE);
         }
-        if (start_screen == 0) {
+
+        // draw guide screen
+        if (game_state == 0) {
             Rectangle guideSource = {0, 0, (float)guide.width, (float)guide.height};
             Rectangle destRec = {0, 0, (float)actualscreenwidth, (float)actualscreenhieght};
             DrawTexturePro(guide, guideSource, destRec, (Vector2){0, 0}, 0.0f, WHITE);
