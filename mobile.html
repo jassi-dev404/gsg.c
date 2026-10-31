@@ -1,128 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-us">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Generic_Sand_Game.c</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      background: #000;
-      height: 100%;
-      overflow: hidden;
-      touch-action: none;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    canvas {
-      border: 0;
-      outline: none;
-      display: block;
-      image-rendering: pixelated;
-      touch-action: none;
-      aspect-ratio: 1590 / 900;
-      width: min(100vw, calc((100dvh - 108px) * 1590 / 900));
-      height: auto;
-    }
-    #btnSkip {
-      position: fixed;
-      top: calc(10px + env(safe-area-inset-top));
-      right: 10px;
-      z-index: 3;
-      width: 84px;
-      height: 44px;
-      border: 0;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.9);
-      color: #000;
-      font: 700 14px sans-serif;
-      touch-action: none;
-      user-select: none;
-    }
-    #controls {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 3;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 12px;
-      padding-bottom: calc(12px + env(safe-area-inset-bottom));
-      pointer-events: none;
-    }
-    #controls div { display: flex; gap: 10px; pointer-events: none; }
-    #controls button {
-      pointer-events: auto;
-      width: 78px;
-      height: 78px;
-      border: 0;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.9);
-      color: #000;
-      font: 700 14px sans-serif;
-      touch-action: none;
-      user-select: none;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
-  <button id="btnSkip" type="button">Skip</button>
-  <div id="controls">
-    <div>
-      <button id="btnLeft" type="button">Left</button>
-      <button id="btnRight" type="button">Right</button>
-    </div>
-    <div>
-      <button id="btnDown" type="button">Down</button>
-    </div>
-  </div>
-  <script>
-    var canvasElement = document.getElementById("canvas");
-    canvasElement.addEventListener("webglcontextlost", function(e) {
-      alert("WebGL context lost. Please reload the page.");
-      e.preventDefault();
-    }, false);
-    function hold(id, name) {
-      var el = document.getElementById(id);
-      function set(v) {
-        if (Module[name]) Module[name](v);
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Generic_Sand_Game.c</title>
+    <style>
+      @font-face {
+        font-family: cool_font;
+        src: url("assets/augiepixel.ttf");
       }
-      el.addEventListener("pointerdown", function(e) {
-        e.preventDefault();
-        el.setPointerCapture(e.pointerId);
-        set(1);
-      });
-      el.addEventListener("pointerup", function(e) {
-        e.preventDefault();
-        set(0);
-      });
-      el.addEventListener("pointercancel", function(e) {
-        e.preventDefault();
-        set(0);
-      });
-      el.addEventListener("lostpointercapture", function() {
-        set(0);
-      });
-    }
-    var Module = {
-      canvas: canvasElement,
-      print: function(...e) { console.log(...e); },
-      printErr: function(...e) { console.error(...e); }
-    };
-    hold("btnLeft", "_SetMoveLeft");
-    hold("btnRight", "_SetMoveRight");
-    hold("btnDown", "_SetMoveDown");
-    document.getElementById("btnSkip").addEventListener("pointerdown", function(e) {
-      e.preventDefault();
-      if (Module._SetSkipGuide) Module._SetSkipGuide(1);
-    });
-  </script>
-  <script async src="index.js"></script>
-</body>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        background: #000;
+        background-image: url("assets/cool.png");
+        height: 100%;
+        overflow: hidden;
+        touch-action: none;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      canvas {
+        border: 0;
+        outline: none;
+        display: block;
+        image-rendering: pixelated;
+        touch-action: none;
+        aspect-ratio: 1590 / 900;
+        width: min(100vw, calc((100dvh - 108px) * 1590 / 900));
+        height: auto;
+      }
+      #btnSkip {
+        position: fixed;
+        top: calc(10px + env(safe-area-inset-top));
+        right: 10px;
+        z-index: 3;
+        width: 84px;
+        height: 44px;
+        border: 0;
+        font-family: cool_font;
+        font: cool_font;
+        font-size: 40px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #000;
+        touch-action: none;
+        user-select: none;
+      }
+      #controls {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 12px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        pointer-events: none;
+      }
+      #controls div {
+        display: flex;
+        gap: 10px;
+        pointer-events: none;
+      }
+      #controls button {
+        pointer-events: auto;
+        width: 78px;
+        height: 78px;
+        border: 0;
+        font-size: 35px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #000;
+        font-family: cool_font;
+        touch-action: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas
+      id="canvas"
+      oncontextmenu="event.preventDefault()"
+      tabindex="-1"
+    ></canvas>
+    <button id="btnSkip" type="button">Skip</button>
+    <div id="controls">
+      <div>
+        <button id="btnLeft" type="button">Left</button>
+        <button id="btnRight" type="button">Right</button>
+      </div>
+      <div>
+        <button id="btnDown" type="button">Down</button>
+      </div>
+    </div>
+    <script>
+      var canvasElement = document.getElementById("canvas");
+      canvasElement.addEventListener(
+        "webglcontextlost",
+        function (e) {
+          alert("WebGL context lost. Please reload the page.");
+          e.preventDefault();
+        },
+        false,
+      );
+      function hold(id, name) {
+        var el = document.getElementById(id);
+        function set(v) {
+          if (Module[name]) Module[name](v);
+        }
+        el.addEventListener("pointerdown", function (e) {
+          e.preventDefault();
+          el.setPointerCapture(e.pointerId);
+          set(1);
+        });
+        el.addEventListener("pointerup", function (e) {
+          e.preventDefault();
+          set(0);
+        });
+        el.addEventListener("pointercancel", function (e) {
+          e.preventDefault();
+          set(0);
+        });
+        el.addEventListener("lostpointercapture", function () {
+          set(0);
+        });
+      }
+      var Module = {
+        canvas: canvasElement,
+        print: function (...e) {
+          console.log(...e);
+        },
+        printErr: function (...e) {
+          console.error(...e);
+        },
+      };
+      hold("btnLeft", "_SetMoveLeft");
+      hold("btnRight", "_SetMoveRight");
+      hold("btnDown", "_SetMoveDown");
+      document
+        .getElementById("btnSkip")
+        .addEventListener("pointerdown", function (e) {
+          e.preventDefault();
+          if (Module._SetSkipGuide) Module._SetSkipGuide(1);
+        });
+    </script>
+    <script async src="index.js"></script>
+  </body>
 </html>
