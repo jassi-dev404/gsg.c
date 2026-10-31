@@ -243,6 +243,7 @@ int O_shape(int color_sand, int cell_pos) {
 
 int main(void) {
     InitWindow(actualscreenwidth, actualscreenhieght, "generic sand game.c");
+    InitAudioDevice();
     SetTargetFPS(60);
     Image gridImg = GenImageColor(screenWidth / pixel_size, screenHeight / pixel_size, BLACK);
     gridTex = LoadTextureFromImage(gridImg);
@@ -253,6 +254,7 @@ int main(void) {
     Font monocraft = LoadFontEx("assets/Monocraft.ttf", 96, 0, 0);
     Texture2D button = LoadTexture("assets/start.png");
     Texture2D guide = LoadTexture("assets/Cool_guide.png");
+    Music bg_music = LoadMusicStream("assets/wow_bg.mp3");
 
     // UI variables
     int btnState = 0;
@@ -276,6 +278,7 @@ int main(void) {
     int fall_rand = 0;
     int shape_color = 0;
     int shape_type = 0;
+    int music_started = 0;
 
     // score variables
     int score = 0;
@@ -306,6 +309,16 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         mousePoint = GetMousePosition();
+        UpdateMusicStream(bg_music);
+
+        if (music_started == 1 && !IsMusicStreamPlaying(bg_music)) {
+                PlayMusicStream(bg_music);
+            }
+
+            if (game_state == 2 && music_started == 0) {
+                PlayMusicStream(bg_music);
+                music_started = 1;
+            }
 
         // start screen
         if (game_state == 1) {
@@ -338,7 +351,7 @@ int main(void) {
         // guide screen
         if (game_state == 0) {
             guide_timer = guide_timer + GetFrameTime();
-            if (guide_timer >= 9.0f) {
+            if (guide_timer >= 90.0f) {
                 game_state = 2;
             }
             if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -413,6 +426,7 @@ int main(void) {
                         }
                     }
                 }
+
                 if (IsKeyDown(KEY_RIGHT) || customRightPressed) {
                     can_move = 1;
                     j = 0;
@@ -953,6 +967,7 @@ int main(void) {
         EndDrawing();
     }
 
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

@@ -1,68 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-us">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generic_Sand_Game.c</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #000;
-      background-image: url("assets/cool.png");
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-    }
-    canvas {
-      border: 0;
-      outline: none;
-      display: block;
-      image-rendering: pixelated;
-    }
-  </style>
-</head>
-<body>
-
-  <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
-
-  <script>
-    var canvasElement = document.getElementById("canvas");
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-          window.location.replace("/mobile.html");
-    }
-    function goFullscreen() {
-      var elem = document.documentElement;
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generic_Sand_Game.c</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      window.removeEventListener("click", goFullscreen);
-      window.removeEventListener("keydown", goFullscreen);
-    }
+      @font-face {
+        font-family: cool_font;
+        src: url("assets/augiepixel.ttf");
+      }
+      body {
+        background-color: #000;
+        background-image: url("assets/cool.png");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      canvas {
+        border: 0;
+        outline: none;
+        display: block;
+        image-rendering: pixelated;
+      }
+      #btnReset {
+        position: fixed;
+        top: calc(10px + env(safe-area-inset-top));
+        left: 10px;
+        z-index: 3;
+        width: 84px;
+        height: 34px;
+        border: 0;
+        font-family: cool_font;
+        font: cool_font;
+        font-size: 37px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #000;
+        touch-action: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas
+      id="canvas"
+      oncontextmenu="event.preventDefault()"
+      tabindex="-1"
+    ></canvas>
+    <button id="btnReset" type="button" onclick="window.location.reload()">
+      Reset
+    </button>
+    <script>
+      var canvasElement = document.getElementById("canvas");
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        )
+      ) {
+        window.location.replace("/mobile.html");
+      }
+      function goFullscreen() {
+        var elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        }
+        window.removeEventListener("click", goFullscreen);
+        window.removeEventListener("keydown", goFullscreen);
+      }
 
-    window.addEventListener("click", goFullscreen);
-    window.addEventListener("keydown", goFullscreen);
+      window.addEventListener("click", goFullscreen);
+      window.addEventListener("keydown", goFullscreen);
 
-    canvasElement.addEventListener("webglcontextlost", function(e) {
-      alert("WebGL context lost. Please reload the page.");
-      e.preventDefault();
-    }, false);
+      canvasElement.addEventListener(
+        "webglcontextlost",
+        function (e) {
+          alert("WebGL context lost. Please reload the page.");
+          e.preventDefault();
+        },
+        false,
+      );
 
-    var Module = {
-      canvas: canvasElement,
-      print: function(...e) { console.log(...e); },
-      printErr: function(...e) { console.error(...e); }
-    };
-  </script>
-  <script async src="index.js"></script>
-</body>
+      var Module = {
+        canvas: canvasElement,
+        print: function (...e) {
+          console.log(...e);
+        },
+        printErr: function (...e) {
+          console.error(...e);
+        },
+      };
+    </script>
+    <script async src="index.js"></script>
+  </body>
 </html>

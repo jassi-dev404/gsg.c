@@ -57,6 +57,23 @@
         touch-action: none;
         user-select: none;
       }
+      #btnReset {
+        position: fixed;
+        top: calc(10px + env(safe-area-inset-top));
+        left: 10px;
+        z-index: 3;
+        width: 84px;
+        height: 34px;
+        border: 0;
+        font-family: cool_font;
+        font: cool_font;
+        font-size: 37px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #000;
+        touch-action: none;
+        user-select: none;
+      }
       #controls {
         position: fixed;
         left: 0;
@@ -97,6 +114,9 @@
       tabindex="-1"
     ></canvas>
     <button id="btnSkip" type="button">Skip</button>
+    <button id="btnReset" type="button" onclick="window.location.reload()">
+      Reset
+    </button>
     <div id="controls">
       <div>
         <button id="btnLeft" type="button">Left</button>
